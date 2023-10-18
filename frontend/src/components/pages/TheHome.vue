@@ -57,7 +57,7 @@ export default {
     data() {
         return {
             searchTerm: '',
-            students: []
+            students: [],
         }
     },
     computed: {
@@ -89,7 +89,6 @@ export default {
             this.disableLogin();
         }
     },
-    
 }
 </script>
 

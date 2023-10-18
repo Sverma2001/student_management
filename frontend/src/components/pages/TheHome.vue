@@ -213,7 +213,4 @@ tr:hover {
   font-weight: bold;
   color: black;
 }
-
-/* Style the page information text */
-
 </style>

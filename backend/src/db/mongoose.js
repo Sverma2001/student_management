@@ -1,13 +1,14 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+require('dotenv').config();
 
-mongoose.connect('mongodb+srv://sverma:Sachin2001@cluster0.zj1nipu.mongodb.net', {
+mongoose.connect(process.env.MONGODB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     ssl: true, // Enable SSL  
 })
 
 .then(()=>{
-    console.log("MongoDb connected successfully")
+    console.log("MongoDb connected successfully");
 }).catch((err)=>{
-    console.log(err)
+    console.log(err);
 })

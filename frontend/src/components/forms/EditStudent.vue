@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
     data() {
@@ -45,7 +45,7 @@ export default {
         ...mapActions('student', ['updateStudent']),
     },
     created() {
-        this.form = this.getStudentToBeUpdated
+        this.form = this.getStudentToBeUpdated;
     }
 }
 </script>

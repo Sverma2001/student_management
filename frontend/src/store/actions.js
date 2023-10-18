@@ -1,14 +1,13 @@
 export default {
     changeFormStatus(context){
-        context.commit('changeFormStatus')
+        context.commit('changeFormStatus');
     },
 
     changeEditStatus(context, payload){
-        
-        context.commit('changeEditStatus', payload)
+        context.commit('changeEditStatus', payload);
     },
 
     disableEdit(context){
-        context.commit('disableEdit')
+        context.commit('disableEdit');
     }
 }

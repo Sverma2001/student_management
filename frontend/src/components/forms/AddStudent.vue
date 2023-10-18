@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions } from 'vuex';
 
 export default {
     data() {
@@ -48,8 +48,8 @@ export default {
         ...mapActions('student',['addStudent']),
 
         addStudents() {
-            this.changeFormStatus()
-            this.addStudent({ ...this.form })   //calling addStudent action to add student data received from the form
+            this.changeFormStatus();
+            this.addStudent({ ...this.form }) ;  //calling addStudent action to add student data received from the form
         }
     }
 }

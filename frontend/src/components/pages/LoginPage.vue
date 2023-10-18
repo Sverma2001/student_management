@@ -38,17 +38,17 @@
       ...mapActions('user',['LoggedIn','checkAuth']),
 
       async login(){
-        await this.checkAuth({...this.form})
+        await this.checkAuth({...this.form});
         if(this.getLoggedInStatus) {
-          this.$router.push('/home')
+          this.$router.push('/home');
         }
-        localStorage.setItem('auth', this.getLoggedInStatus)    //setting login status in local storage after navigating 
+        localStorage.setItem('auth', this.getLoggedInStatus) ;   //setting login status in local storage after navigating 
       },
     },
 
     //setting up login status in local storage
-    beforeCreate(){
-      localStorage.setItem('auth', this.getLoggedInStatus)
+    created(){
+      localStorage.setItem('auth', this.getLoggedInStatus);
     }
   };
 

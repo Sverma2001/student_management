@@ -44,9 +44,9 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
-import AddStudent from '../forms/AddStudent.vue'
-import EditStudent from '../forms/EditStudent.vue'
+import { mapGetters, mapActions } from 'vuex';
+import AddStudent from '../forms/AddStudent.vue';
+import EditStudent from '../forms/EditStudent.vue';
 
 export default {
     components: {
@@ -73,20 +73,20 @@ export default {
         ...mapActions(['changeEditStatus', 'changeFormStatus'   ]),
         ...mapActions('user', ['LoggedIn', 'disableLogin']),
         search() {
-            this.setSearchTerm(this.searchTerm)
-            this.setStudents(this.getCurrentPage)
+            this.setSearchTerm(this.searchTerm);
+            this.setStudents(this.getCurrentPage);
         }
     },
 
     created() {
-        this.setStudents(this.getCurrentPage)
+        this.setStudents(this.getCurrentPage);
 
         //checking if user is logged in 
         if(localStorage.getItem('auth')){
-            this.LoggedIn()
+            this.LoggedIn();
         }
         else{
-            this.disableLogin()
+            this.disableLogin();
         }
     },
     

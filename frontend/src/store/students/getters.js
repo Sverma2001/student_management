@@ -6,11 +6,11 @@ export default {
 
     //fetching current page from the index.js
     getCurrentPage(state){
-        return state.currentPage
+        return state.currentPage;
     },
 
     //fetching total pages from the index.js
     getTotalPages(state){
-        return state.totalPages
+        return state.totalPages;
     }
 }

@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
-import TheHome from './components/pages/TheHome.vue'
-import LoginPage from './components/pages/LoginPage.vue'
+import TheHome from './components/pages/TheHome.vue';
+import LoginPage from './components/pages/LoginPage.vue';
 // import store from './store'  
 
 const router = createRouter({
@@ -26,14 +26,14 @@ const router = createRouter({
             //setting auth gaurd for the home page
             beforeEnter: (to, from, next) => {
                 if(localStorage.getItem('auth') === 'true') {
-                    next()
+                    next();
                 }
                 else {
-                    next('/login')
+                    next('/login');
                 }    
             }
         }]
 
     })
 
-export default router
+export default router;

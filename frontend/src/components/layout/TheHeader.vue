@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
     computed: {
@@ -29,8 +29,8 @@ export default {
 
         //redirecting the user to login Page after logging out
         logout() {
-            this.disableLogin()
-            this.$router.push('/login')
+            this.disableLogin();
+            this.$router.push('/login');
         }
     }
 }

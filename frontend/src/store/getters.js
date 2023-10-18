@@ -1,13 +1,13 @@
 export default {
     getFormStatus(state){
-        return state.showForm
+        return state.showForm;
     },
 
     getEditStatus(state){
-        return state.editStudent
+        return state.editStudent;
     },
 
     getStudentToBeUpdated(state){
-        return state.studentToBeUpdated
+        return state.studentToBeUpdated;
     }
 }

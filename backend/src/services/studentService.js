@@ -4,13 +4,7 @@ const studentRepo = require('../repositories/studentRepositories');
 //adding the student into the database
 const addStudent = async (data) => {
     try {
-        const id = await studentRepo.getStudentId();
-        const student = new Student({
-            id: id,
-            ...data
-        });
-        await student.save() ;
-        return student;
+        return await studentRepo.addStudent(data);
     }
     catch (err) {
         return err;

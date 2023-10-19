@@ -4,7 +4,7 @@
         <div class="form-container">
             <button id="overlay" @click="disableEdit()">X</button>
             <h2>Updation Form</h2>
-            <form @submit.prevent="updateStudent(form)">
+            <form @submit.prevent="editStudent(form)">
 
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" disabled v-model="form.name">
@@ -29,6 +29,8 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
 export default {
     data() {
@@ -36,13 +38,29 @@ export default {
             form: {}
         }
     },
+
+    setup() {
+        const notify = (message) => {
+            toast(message, {
+                autoClose: 1000,
+            }); // ToastOptions
+        }
+        return { notify };
+    },
     computed: {
         ...mapGetters(['getStudentToBeUpdated'])
     },
     methods: {
         ...mapActions(['disableEdit']),
-
         ...mapActions('student', ['updateStudent']),
+
+        editStudent(data) {
+            console.log(data)
+            this.updateStudent(data)
+                .then((response) => {
+                    this.notify(response.data);
+                })
+        }
     },
     created() {
         this.form = this.getStudentToBeUpdated;
@@ -104,7 +122,7 @@ input[type="submit"]:hover {
     background-color: #555;
 }
 
-h2{
+h2 {
     color: red;
     font-weight: bolder;
 }
@@ -119,12 +137,12 @@ h2{
     background-color: red;
 }
 
-#backdrop{
+#backdrop {
     position: fixed;
-    top:0;
-    left:0;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0,0.7);
+    background-color: rgba(0, 0, 0, 0.7);
 }
 </style>

@@ -29,6 +29,8 @@
 
 <script>
 import { mapActions } from 'vuex';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
 export default {
     data() {
@@ -43,13 +45,26 @@ export default {
         }
     },
 
+    setup() {
+        const notify = (message) => {
+            toast(message, {
+                autoClose: 1000,
+            }); // ToastOptions
+        }
+        return { notify };
+    },
+
     methods: {
         ...mapActions(['changeFormStatus']),
         ...mapActions('student',['addStudent']),
 
         addStudents() {
             this.changeFormStatus();
-            this.addStudent({ ...this.form }) ;  //calling addStudent action to add student data received from the form
+            //calling addStudent action to add student data received from the form
+            this.addStudent({ ...this.form })
+            .then((response) => {
+                this.notify(response.data);
+            })
         }
     }
 }

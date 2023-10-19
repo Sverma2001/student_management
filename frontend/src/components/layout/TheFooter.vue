@@ -1,7 +1,7 @@
 <template>
     <footer class="footer">
       <div class="footer-content">
-        <p>&copy; {{ currentYear }} Argusoft private ltd</p>
+        <p>&copy; {{ currentYear }} Argusoft private ltd. All Rights Reserved</p>
       </div>
     </footer>
   </template>

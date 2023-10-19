@@ -4,7 +4,7 @@ const studentService = require('../services/studentService');
 async function addStudent(req, res) {
     try {
         await studentService.addStudent(req.body);
-        res.send(`Student added successfully`);
+        res.send(`${req.body.name} Student added successfully`);
     }
      catch (err) {
         res.status(400).send({err:'Adding Student Failed'});
@@ -28,7 +28,7 @@ async function deleteStudent(req, res) {
     const id = req.params.id;
     try {
         const deletedStudent = await studentService.deleteStudent(id);
-        res.status(200).send(`student - ${deletedStudent.name} is deleted successfully`);
+        res.status(200).send(`student ${deletedStudent.name} is deleted successfully`);
     }
     catch (err) {
         res.status(500).send({err:'Student Deletion Failed'});

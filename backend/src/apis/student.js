@@ -1,7 +1,6 @@
 const express = require('express');
 const router = new express.Router();
 const studentController = require('../controller/studentController');
-
 const verifyToken = require('../middleware/verifyToken');
 
 router.post('/addStudent',verifyToken, studentController.addStudent);

@@ -26,7 +26,7 @@
                     <td>{{ student.contact }}</td>
                     <td>
                         <button @click="changeEditStatus(student)" class="edit">Edit</button>
-                        <button @click="deleteStudent(student.id)" class="delete">Delete</button>
+                        <button @click="handleDelete(student.id)" class="delete">Delete</button>
                     </td>
                 </tr>
             </tbody>
@@ -44,6 +44,8 @@
 </template>
 
 <script>
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 import { mapGetters, mapActions } from 'vuex';
 import AddStudent from '../forms/AddStudent.vue';
 import EditStudent from '../forms/EditStudent.vue';
@@ -60,32 +62,44 @@ export default {
             students: [],
         }
     },
+    setup() {
+        const notify = (message) => {
+            toast(message, {
+                autoClose: 1000,
+            }); // ToastOptions
+        }
+        return { notify };
+    },
     computed: {
         ...mapGetters('student', ['getStudents', 'filteredStudents', 'getCurrentPage', 'getTotalPages']),
-
         ...mapGetters('user', ['getLoggedInStatus']),
-
         ...mapGetters(['getFormStatus', 'getEditStatus'])
     },
     methods: {
-        ...mapActions('student', ['setStudents', 'deleteStudent','setSearchTerm']),
-
-        ...mapActions(['changeEditStatus', 'changeFormStatus'   ]),
+        ...mapActions('student', ['setStudents', 'deleteStudent', 'setSearchTerm']),
+        ...mapActions(['changeEditStatus', 'changeFormStatus']),
         ...mapActions('user', ['LoggedIn', 'disableLogin']),
+
         search() {
             this.setSearchTerm(this.searchTerm);
             this.setStudents(this.getCurrentPage);
+        },
+
+        handleDelete(id) {
+            this.deleteStudent(id)
+                .then((response) => {
+                    this.notify(response.data);
+                })
         }
     },
 
     created() {
         this.setStudents(this.getCurrentPage);
-
         //checking if user is logged in 
-        if(localStorage.getItem('auth')){
+        if (localStorage.getItem('auth')) {
             this.LoggedIn();
         }
-        else{
+        else {
             this.disableLogin();
         }
     },
@@ -93,39 +107,33 @@ export default {
 </script>
 
 <style scoped>
-*{
-    padding:0;
-    margin:0;
-    box-sizing:border-box;
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
+
 .container {
     width: 100%;
     height: 100vh;
     margin-bottom: 200px;
     font-weight: bold;
+    display: block;
+}
+
+.search-bar {
+    display: flex;
+    justify-content: right;
+    width: 99%;
 }
 
 input {
     margin-top: 20px;
-    align-items: center;
-    width: 90%;
+    justify-self: right;
+    border-radius: 10px;
+    width: 40%;
     padding: 10px;
     font-weight: bold;
-}
-
-.search-bar button {
-    margin: 20px 10px;
-    position: absolute;
-    right: 10px;
-    /* Adjust the right margin as needed */
-    padding: 10px;
-    font-weight: bold;
-}
-
-.search-bar button:hover {
-    cursor: pointer;
-    background-color: black;
-    color: White;
 }
 
 table {
@@ -178,38 +186,39 @@ tr:hover {
     cursor: pointer;
 }
 
-.edit{
-    background-color:orange
+.edit {
+    background-color: orange
 }
-.delete{
-    background-color:red;
-    color:white
+
+.delete {
+    background-color: red;
+    color: white
 }
 
 /* Style the pagination container */
 .pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
 }
 
 /* Style the previous and next buttons */
 .pagination button {
-  padding: 10px 20px;
-  background-color: blue;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin: 0 5px;
-  transition: background-color 0.3s;
+    padding: 10px 20px;
+    background-color: blue;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 5px;
+    transition: background-color 0.3s;
 }
 
 .pagination button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-  font-weight: bold;
-  color: black;
+    background-color: #ccc;
+    cursor: not-allowed;
+    font-weight: bold;
+    color: black;
 }
 </style>

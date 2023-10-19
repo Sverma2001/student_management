@@ -28,9 +28,10 @@ export default {
     //adding student data to database
     async addStudent(context, payload) {
         try {
-            await axiosService.post('http://localhost:3000/addStudent', payload);
+            const addedStudent = await axiosService.post('http://localhost:3000/addStudent', payload);
             //updating the students array in the store
             context.commit('addStudent', payload);
+            return addedStudent;
         }
         catch (error) {
             console.log(error);
@@ -40,8 +41,9 @@ export default {
     //deleting student data from database
     async deleteStudent(context, payload) {
         try {
-            await axiosService.delete(`http://localhost:3000/deleteStudent/${payload}`);
+            const deletedStudent = await axiosService.delete(`http://localhost:3000/deleteStudent/${payload}`);
             context.commit('deleteStudent', payload);
+            return deletedStudent;
         }
         catch (error) {
             console.log(error);
@@ -54,9 +56,10 @@ export default {
         const student = { ...payload };
 
         try {
-            await axiosService.patch('http://localhost:3000/updateStudent', student);
+            const updatedStudent = await axiosService.patch('http://localhost:3000/updateStudent', student);
             //calling to mutation for updating the students data in the store
             context.commit('updateStudent', student);
+            return updatedStudent;
         }
         catch (error) {
             console.log(error);

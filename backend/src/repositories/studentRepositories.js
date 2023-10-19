@@ -1,5 +1,21 @@
 const Student = require('../models/studentSchema');
 
+//adding student
+const addStudent = async (data) => {
+    try {
+        const id = await getStudentId();
+        const student = new Student({
+            id: id,
+            ...data
+        });
+        await student.save() ;
+        return student;
+    }
+    catch{
+        return "Unable to add student to the database";
+    }
+}
+
 //fetching total pages
 const totalPages = async (limit) => {
     try {
@@ -80,6 +96,7 @@ const filterStudents = async (query, pages, limit) => {
 }
 
 module.exports = {
+    addStudent,
     deleteStudent,
     updateStudent,
     filterStudents,

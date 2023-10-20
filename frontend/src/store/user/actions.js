@@ -16,9 +16,21 @@ export default {
         context.commit('displayError', payload);
     },
 
+    //signup user
+    async addUser(context, formdata) {
+        try {
+            const response = await axios.post('http://localhost:3000/signup', formdata);
+            console.log("Response",response);
+            return response;
+        }
+        catch (error) {
+            console.log(error);
+        }
+    },
 
     //checking if the user is authorized
     async checkAuth(context, payload) {
+        console.log("payload",payload);
         try {
             const response = await axios.post('http://localhost:3000/login', payload);
 

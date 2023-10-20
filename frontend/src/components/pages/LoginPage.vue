@@ -11,6 +11,11 @@
             <input type="password" id="password" name="password" v-model="form.password" required>
           
             <p v-if="!getLoggedInStatus" class="error">{{ getErrorMessage }}</p>
+
+            <div class="navigation">
+              <p>Don't have an account?</p>
+              <router-link to="/signup" style="text-decoration: none;">Register Here</router-link>
+            </div>
           <button type="submit" class="login-button">Login</button>
         
         </form>
@@ -21,7 +26,6 @@
   <script>
   import { mapActions, mapGetters } from 'vuex';
   export default {
-  
     data() {
       return {
         form:{
@@ -55,6 +59,16 @@
   </script>
   
   <style scoped>
+  .navigation{
+    display: flex;
+    font-weight: bold;
+  }
+
+  .navigation p{
+    margin-right: 5px;
+    color: black;
+  }
+
   .login-container {
     display: flex;
     justify-content: center;
@@ -84,7 +98,6 @@
   
   .form-group {
     margin-bottom: 15px;
-    width: 100%;
   }
   
   label {
@@ -95,7 +108,7 @@
   
   input[type="text"],
   input[type="password"] {
-    width: 100%;
+    width: 90%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;

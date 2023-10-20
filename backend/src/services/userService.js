@@ -3,11 +3,11 @@ const bcrypt = require('bcryptjs');
 const userRepo = require('../repositories/userRepositories');
 
 //adding user to the database
-const addUser = async (username, password, saltRounds) => {
+const addUser = async (fname,lname,username, password, saltRounds) => {
     try {
         const user = await userRepo.findUser(username);
         if (user) {
-            return 'username already exists';
+            return 'username already exists, Please choose another';
         }
     }
     catch (err) {
@@ -18,11 +18,14 @@ const addUser = async (username, password, saltRounds) => {
     bcrypt.genSalt(saltRounds, (err, salt) => {
         bcrypt.hash(password, salt, async (err, hash) => {
             if (err) {
-                // Handle error
+                return {err: 'Hashing Failed'}
             }
             else {
                 user = new User({
-                    username: username, password: hash
+                    fname: fname,
+                    lname: lname,
+                    username: username,
+                    password: hash
                 });
                 try {
                     await user.save();

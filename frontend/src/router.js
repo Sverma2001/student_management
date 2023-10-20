@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import TheHome from './components/pages/TheHome.vue';
 import LoginPage from './components/pages/LoginPage.vue';
+import SignupPage from './components/pages/SignupPage.vue';
 // import store from './store'  
 
 const router = createRouter({
@@ -9,6 +10,11 @@ const router = createRouter({
         {
             path:'/',
             redirect: '/login'
+        },
+        {
+            path: "/signup",
+            name: "signup",
+            component: SignupPage
         },
         {
             path: "/login",

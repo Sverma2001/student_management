@@ -55,7 +55,6 @@ export default {
         ...mapActions('student', ['updateStudent']),
 
         editStudent(data) {
-            console.log(data)
             this.updateStudent(data)
                 .then((response) => {
                     this.notify(response.data);

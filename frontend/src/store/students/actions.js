@@ -7,7 +7,6 @@ export default {
         if (!context.state.searchTerm) {
             try {
                 const response = await instance.get(`http://localhost:3000/getStudents?page=${page}`)
-                console.log(response);
                 context.commit('setStudents', response.data);
             }
             catch (error) {

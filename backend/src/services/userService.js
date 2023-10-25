@@ -32,7 +32,7 @@ const getUser = async () => {
         return await userRepo.getUser();
     }
     catch (err) {
-        console.log(err);
+        return err;
     }
 }
 

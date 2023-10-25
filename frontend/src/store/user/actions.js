@@ -30,22 +30,18 @@ export default {
 
     //checking if the user is authorized
     async checkAuth(context, payload) {
-        console.log("checkauth")
         try {
-            console.log(payload)
             const response = await axios.post('http://localhost:3000/login', payload);
-            console.log("Response",response);
             const token = response.data.token;
             localStorage.setItem('token', token);
             if (response.data.token) {
                 context.commit('LoggedIn');   //setting login status to true
             }
             else
-                context.commit('displayError', "Please Enter Valid Details") ;  //setting error message
+                context.commit('displayError', response.data.error) ;  //setting error message
         }
 
         catch (error) {
-            console.log("An error occurred:", error);
             context.commit('displayError', "An error occurred during login");
         }
     }

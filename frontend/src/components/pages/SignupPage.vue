@@ -49,7 +49,7 @@ export default {
     async signup() {
       try {
         const response = await this.addUser(this.form)
-        if (response.data.includes('username already exists')) {
+        if (response?.data?.includes('username already exists')) {
           this.errorMessage = response.data
         }
         else {

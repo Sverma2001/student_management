@@ -1,14 +1,14 @@
-const loginService = require('../services/loginService');
+const passport = require('passport');
+const generateToken = require('../middleware/generateToken');
 
 async function loginUser(req, res) {
-    const {username, password} = {...req.body};
-    try{
-        const token = await loginService.loginUser(username, password);
-        res.status(200).send({token:token});
-    }
-    catch(err){
-        res.status(500).send({err:'Internal Server Error'});
-    }
+    passport.authenticate('local', { session: false }, (err, user) => {
+        if (err || !user) {
+            return res.json({ error: 'Invalid username or password' });
+        }
+        const token = generateToken(user);
+        res.json({ token });
+    })(req, res);
 }
 
 module.exports = {

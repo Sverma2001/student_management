@@ -43,6 +43,7 @@ async function updateStudent(req, res) {
         res.status(201).send(`${updatedStudent.name}'s data updated successfully`);
     }
     catch (err) {
+        console.log(err)
         res.status(400).send({err:'Updating Student Failed'});
     }
 }

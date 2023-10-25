@@ -30,10 +30,11 @@ export default {
 
     //checking if the user is authorized
     async checkAuth(context, payload) {
-        console.log("payload",payload);
+        console.log("checkauth")
         try {
+            console.log(payload)
             const response = await axios.post('http://localhost:3000/login', payload);
-
+            console.log("Response",response);
             const token = response.data.token;
             localStorage.setItem('token', token);
             if (response.data.token) {

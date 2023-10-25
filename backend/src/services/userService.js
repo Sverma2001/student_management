@@ -3,40 +3,27 @@ const bcrypt = require('bcryptjs');
 const userRepo = require('../repositories/userRepositories');
 
 //adding user to the database
-const addUser = async (fname,lname,username, password, saltRounds) => {
+const addUser = async (fname, lname, username, password) => {
     try {
-        const user = await userRepo.findUser(username);
+        let user = await userRepo.findUser(username);
         if (user) {
             return 'username already exists, Please choose another';
         }
+
+        const obj = {
+            fname: fname,
+            lname: lname,
+            username: username,
+            password: await bcrypt.hash(password, 10)
+        };
+        user = new User(obj);
+
+        await user.save();
+        return "user created";
     }
     catch (err) {
         return err;
     }
-
-    let user = {}
-    bcrypt.genSalt(saltRounds, (err, salt) => {
-        bcrypt.hash(password, salt, async (err, hash) => {
-            if (err) {
-                return {err: 'Hashing Failed'}
-            }
-            else {
-                user = new User({
-                    fname: fname,
-                    lname: lname,
-                    username: username,
-                    password: hash
-                });
-                try {
-                    await user.save();
-                    return user;
-                }
-                catch (err) {
-                    return err;
-                }
-            };
-        });
-    });
 }
 
 //fetch user from the database

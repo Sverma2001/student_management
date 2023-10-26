@@ -8,6 +8,7 @@ export default{
     //setting login status to false
     disableLogin(state) {
         state.isLoggedIn = false;
+        state.errorMessage = '';
     },
 
     //setting error message

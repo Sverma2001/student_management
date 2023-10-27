@@ -18,14 +18,13 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-
 export default {
     computed: {
         ...mapGetters('user', ['getLoggedInStatus'])
     },
     methods: {
         ...mapActions(['changeFormStatus']),
-        ...mapActions('user', ['LoggedIn', 'disableLogin']),
+        ...mapActions('user', ['disableLogin']),
 
         //redirecting the user to login Page after logging out
         logout() {

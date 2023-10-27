@@ -76,7 +76,7 @@ export default {
     },
     methods: {
         ...mapActions('student', ['setStudents', 'deleteStudent', 'setSearchTerm']),
-        ...mapActions(['changeEditStatus', 'changeFormStatus']),
+        ...mapActions(['changeEditStatus']),
         ...mapActions('user', ['LoggedIn', 'disableLogin']),
 
         search() {

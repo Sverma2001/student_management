@@ -37,7 +37,7 @@
     },
 
     methods: {
-      ...mapActions('user',['LoggedIn','checkAuth']),
+      ...mapActions('user',['checkAuth']),
 
       async login(){
         await this.checkAuth({...this.form});

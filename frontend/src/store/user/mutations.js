@@ -1,5 +1,4 @@
 export default{
-
     //setting login status to true
     LoggedIn(state) {
         state.isLoggedIn = true;

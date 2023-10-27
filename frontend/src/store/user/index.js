@@ -10,6 +10,7 @@ export default{
             errorMessage:' '   // storing error message to display on the login form
         }
     },
+
     actions:userActions,
     mutations:userMutations,
     getters:userGetters

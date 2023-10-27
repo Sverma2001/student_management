@@ -1,5 +1,4 @@
 export default {
-
     //changing form status
     changeFormStatus(state) {
         state.showForm = state.showForm === true ? false : true;
@@ -11,6 +10,7 @@ export default {
         state.studentToBeUpdated = payload;
     },
 
+    //setting editfomr to false
     disableEdit(state) {
         state.editStudent = false;
     }

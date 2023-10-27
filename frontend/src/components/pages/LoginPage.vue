@@ -1,4 +1,3 @@
-<!-- App.vue -->
 <template>
     <div class="login-container">
       <div class="login-box">
@@ -17,7 +16,6 @@
               <router-link to="/signup" style="text-decoration: none;">Register Here</router-link>
             </div>
           <button type="submit" class="login-button">Login</button>
-        
         </form>
       </div>
     </div>

@@ -4,13 +4,13 @@ const app = express();
 const dotenv = require('dotenv');
 const router = require('./router');
 const passport = require('passport');
+app.use(cors());
 const expressSession = require('express-session');
 const { initializingPassport } = require('./passportConfig');
 require('dotenv').config();
 require('./db/mongoose');
 const port = process.env.PORT
 dotenv.config();
-app.use(cors());
 app.use(express.json());
 app.use(expressSession({
     secret: process.env.SECRET_KEY,

@@ -3,8 +3,8 @@ require('dotenv').config();
 const secretKey = process.env.SECRET_KEY;
 
 //generate token
-const generateToken = (username) => {
-    const user = { username };
+const generateToken = (userid) => {
+    const user = { userid };
     try {
         const token = jwt.sign(user, secretKey, { expiresIn: '1h' });
         return token;

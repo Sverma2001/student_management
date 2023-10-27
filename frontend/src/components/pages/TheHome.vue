@@ -71,8 +71,7 @@ export default {
         return { notify };
     },
     computed: {
-        ...mapGetters('student', ['getStudents', 'filteredStudents', 'getCurrentPage', 'getTotalPages']),
-        ...mapGetters('user', ['getLoggedInStatus']),
+        ...mapGetters('student', ['getStudents', 'getCurrentPage', 'getTotalPages']),
         ...mapGetters(['getFormStatus', 'getEditStatus'])
     },
     methods: {

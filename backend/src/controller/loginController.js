@@ -6,7 +6,7 @@ async function loginUser(req, res) {
         if (err || !user) {
             return res.json({ error: 'Invalid username or password' });
         }
-        const token = generateToken(user);
+        const token = generateToken(user._id);
         res.json({ token });
     })(req, res);
 }

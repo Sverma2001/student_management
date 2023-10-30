@@ -4,23 +4,16 @@ import instance from '../../services/axiosService';
 //setting student to the student array
 export default {
     async setStudents(context, page) {
-        if (!context.state.searchTerm) {
-            try {
-                const response = await instance.get(`http://localhost:3000/getStudents?page=${page}`)
-                context.commit('setStudents', response.data);
+        try {
+            let response;
+            if (!context.state.searchTerm) {
+                response = await instance.get(`http://localhost:3000/getStudents`);
+            } else {
+                response = await instance.get(`http://localhost:3000/filterSearch/${context.state.searchTerm}?page=${page}`);
             }
-            catch (error) {
-                console.log(error);
-            }
-        }
-        else {
-            try {
-                const response = await instance.get(`http://localhost:3000/filterSearch/${context.state.searchTerm}?page=${page}`);
-                context.commit('setStudents', response.data);
-            }
-            catch (error) {
-                console.log(error);
-            }
+            context.commit('setStudents', response.data);
+        } catch (error) {
+            console.log(error);
         }
     },
 

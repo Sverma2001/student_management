@@ -20,11 +20,11 @@ export default {
     async addUser(context, formdata) {
         try {
             const response = await axios.post('http://localhost:3000/signup', formdata);
-            console.log("Response",response);
+            console.log("Response", response);
             return response;
         }
         catch (error) {
-            console.log(error);
+            console.error(error);
         }
     },
 
@@ -35,10 +35,12 @@ export default {
             const token = response.data.token;
             localStorage.setItem('token', token);
             if (response.data.token) {
-                context.commit('LoggedIn');   //setting login status to true
+                //setting login status to true
+                context.commit('LoggedIn');
             }
             else
-                context.commit('displayError', response.data.error) ;  //setting error message
+                //setting error message
+                context.commit('displayError', response.data.error);
         }
 
         catch (error) {

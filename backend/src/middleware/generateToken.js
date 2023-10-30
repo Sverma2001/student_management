@@ -6,8 +6,7 @@ const secretKey = process.env.SECRET_KEY;
 const generateToken = (userid) => {
     const user = { userid };
     try {
-        const token = jwt.sign(user, secretKey, { expiresIn: '1h' });
-        return token;
+        return jwt.sign(user, secretKey, { expiresIn: '1d' });
     }
     catch (err) {
         throw Error("unable to generate token");

@@ -1,4 +1,3 @@
-const Student = require('../models/studentSchema');
 const studentRepo = require('../repositories/studentRepositories');
 
 //adding the student into the database
@@ -6,8 +5,8 @@ const addStudent = async (data) => {
     try {
         return await studentRepo.addStudent(data);
     }
-    catch (err) {
-        return err;
+    catch (error) {
+        return error;
     }
 }
 
@@ -24,8 +23,8 @@ const getStudents = async (page) => {
         };
         return student;
     }
-    catch (err) {
-        return err;
+    catch (error) {
+        return error;
     }
 }
 

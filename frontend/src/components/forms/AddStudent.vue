@@ -49,7 +49,7 @@ export default {
         const notify = (message) => {
             toast(message, {
                 autoClose: 1000,
-            }); // ToastOptions
+            });
         }
         return { notify };
     },

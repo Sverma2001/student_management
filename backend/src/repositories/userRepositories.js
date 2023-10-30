@@ -1,5 +1,4 @@
 const User = require('../models/userSchema');
-const bcrypt = require('bcryptjs');
 
 //fetching user
 const getUser = async() => {
@@ -7,7 +6,7 @@ const getUser = async() => {
         return await User.find();
     }
     catch{
-        return 'Failed to fetch user';
+        throw new Error('Unable to fetch user');
     }
 }
 
@@ -17,7 +16,7 @@ const findUser = async(username) => {
         return await User.findOne({username:username});
     }
     catch{
-        return 'Failed to find user';
+        throw new Error('Unable to find user');
     }
 }
 

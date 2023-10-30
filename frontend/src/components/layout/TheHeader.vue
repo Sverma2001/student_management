@@ -75,25 +75,25 @@ header {
 }
 
 .dropdown {
-  position: relative;
-  display: inline-block;
+    position: relative;
+    display: inline-block;
 }
 
 .dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: white;
-  min-width:100px;
-  right: 0;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  padding-top:12px ;
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 100px;
+    right: 0;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    padding-top: 12px;
 }
 
 .dropdown:hover .dropdown-content {
-  display: block;
+    display: block;
 }
 
-p{
+p {
     color: black;
     cursor: pointer;
     font-size: large;

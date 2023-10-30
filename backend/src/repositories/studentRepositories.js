@@ -8,11 +8,11 @@ const addStudent = async (data) => {
             id: id,
             ...data
         });
-        await student.save() ;
+        await student.save();
         return student;
     }
-    catch{
-        return "Unable to add student to the database";
+    catch {
+        throw new Error('Unable to add student');
     }
 }
 
@@ -23,7 +23,7 @@ const totalPages = async (limit) => {
         return Math.ceil(totalStudents / limit);
     }
     catch {
-        return 'Unable to fetch total pages';
+        throw new Error('Unable to fetch total pages');
     }
 }
 
@@ -33,43 +33,41 @@ const getStudents = async (page, limit) => {
     try {
         return await Student.find().skip(skip).limit(limit);
     } catch {
-        return 'Unable to fetch students';
+        throw new Error('Unable to fetch students');
     }
 }
 
 //getting student id
 const getStudentId = async () => {
     try {
-        const studentId = await Student.find().sort({ id: -1 }).limit(1);
-        if (!studentId || studentId.length === 0) {
-            return id = 1;
+        const latestStudent = await Student.findOne().sort({ id: -1 });
+        if (!latestStudent) {
+            return 1;
+        } else {
+            return latestStudent.id + 1;
         }
-        else {
-            return id = studentId[0].id + 1;
-        }
-    }
-    catch {
-        return 'unable to get id';
+    } catch {
+        throw new Error('Unable to fetch student id');
     }
 }
 
 //deleting student
 const deleteStudent = async (id) => {
     try {
-        return await Student.findOneAndDelete({ id: id });
+        return await Student.findOneAndDelete({ id });
     }
     catch (err) {
-        return "Unable to delete";
+        throw new Error('Unable to delete student');
     }
 }
 
 //updating student
 const updateStudent = async (id, address, contact) => {
     try {
-        return await Student.findOneAndUpdate({ id: id }, { address: address, contact: contact });
+        return await Student.findOneAndUpdate({ id }, { address, contact });
     }
     catch (err) {
-        return "Unable to update";
+        throw new Error('Unable to update student');
     }
 }
 
@@ -91,7 +89,7 @@ const filterStudents = async (query, pages, limit) => {
         return await Student.find(searchQuery).skip(skip).limit(limit);
     }
     catch (err) {
-        return 'Unable to display data';
+        throw new Error('Unable to filter students');
     }
 }
 

@@ -4,10 +4,10 @@ const studentService = require('../services/studentService');
 async function addStudent(req, res) {
     try {
         await studentService.addStudent(req.body);
-        res.send(`${req.body.name} Student added successfully`);
+        res.status(201).send(`${req.body.name} added successfully`);
     }
-     catch (err) {
-        res.status(400).send({err:'Adding Student Failed'});
+     catch (error) {
+        res.status(500).send({error:'Adding Student Failed'});
     }
 }
 
@@ -18,20 +18,20 @@ async function getStudents(req, res) {
         const student = await studentService.getStudents(page);
         res.status(200).send(student);
     }
-    catch (err) {
-        res.status(500).json({ err: 'Internal Server Error' });
+    catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 }
 
 //delete student from the database
 async function deleteStudent(req, res) {
-    const id = req.params.id;
+    const studentid = req.params.id;
     try {
-        const deletedStudent = await studentService.deleteStudent(id);
-        res.status(200).send(`student ${deletedStudent.name} is deleted successfully`);
+        const deletedStudent = await studentService.deleteStudent(studentid);
+        res.status(201).send(`${deletedStudent.name}'s data has been deleted successfully`);
     }
-    catch (err) {
-        res.status(500).send({err:'Student Deletion Failed'});
+    catch (error) {
+        res.status(500).send({error:'Student Deletion Failed'});
     }
 }
 
@@ -42,21 +42,21 @@ async function updateStudent(req, res) {
         const updatedStudent = await studentService.updateStudent(id, address, contact);
         res.status(201).send(`${updatedStudent.name}'s data updated successfully`);
     }
-    catch (err) {
-        res.status(400).send({err:'Updating Student Failed'});
+    catch (error) {
+        res.status(500).send({error:'Updating Student Failed'});
     }
 }
 
 //filtering student on the basis of search term
 async function filterStudents(req, res) {
+    const searchTerm = req.params.searchTerm;
     const page = parseInt(req.query.page) || 1;
-    const query = req.params.searchTerm;
     try {
-        const students = await studentService.filterStudents(query, page);
-        res.send(students);
+        const students = await studentService.filterStudents(searchTerm, page);
+        res.status(200).send(students);
     }
-    catch (err) {
-        res.status(401).send({err:'Unable to display data'});
+    catch (error) {
+        res.status(500).send({error:'Unable to display data'});
     }
 }
 

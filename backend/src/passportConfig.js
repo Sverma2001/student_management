@@ -11,14 +11,14 @@ exports.initializingPassport = (passport) => {
             const user = await User.findOne({ username });
             if (!user) {
                 return done(null, false);
-            }   
-            if (!(await isValidPassword(user.password, password))){
+            }
+            if (!(await isValidPassword(user.password, password))) {
                 return done(null, false);
-            } 
+            }
             return done(null, user);
         }
-        catch (err) {
-            return done(err, false);
+        catch (error) {
+            return done(error, false);
         }
     }));
 
@@ -32,8 +32,8 @@ exports.initializingPassport = (passport) => {
             const user = await User.findById(jwt_payload.userid);
             if (user) return done(null, user);
             return done(null, false);
-        } catch (err) {
-            return done(err, false);
+        } catch (error) {
+            return done(error, false);
         }
     }));
 }

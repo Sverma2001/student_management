@@ -3,9 +3,9 @@ const bcrypt = require('bcryptjs');
 
 //adding user
 async function addUser(req, res) {
-    const { fname, lname, username, password } = { ...req.body };
+    const { name, username, password } = { ...req.body };
     try {
-        const user = await userService.addUser(fname, lname, username, password);
+        const user = await userService.addUser(name, username, password);
         res.status(201).send(user);
     }
     catch (err) {
@@ -17,16 +17,15 @@ async function addUser(req, res) {
 async function getUser(req, res) {
     try {
         const user = await userService.getUser();
-        res.status(201).send(user);
+        res.status(200).send(user);
     }
     catch (err) {
-        res.status(401).send(err);
+        res.status(500).send(err);
     }
 }
 
 async function isValidPassword (userPassword, enteredPassword) {
-    const compare = await bcrypt.compare(enteredPassword, userPassword);
-    return compare;
+    return await bcrypt.compare(enteredPassword, userPassword);
 }
 
 module.exports = {

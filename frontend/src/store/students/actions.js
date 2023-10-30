@@ -13,7 +13,7 @@ export default {
             }
             context.commit('setStudents', response.data);
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     },
 
@@ -26,7 +26,7 @@ export default {
             return addedStudent;
         }
         catch (error) {
-            console.log(error);
+            console.error(error);
         }
     },
 
@@ -38,7 +38,7 @@ export default {
             return deletedStudent;
         }
         catch (error) {
-            console.log(error);
+            console.error(error);
         }
     },
 
@@ -54,7 +54,7 @@ export default {
             return updatedStudent;
         }
         catch (error) {
-            console.log(error);
+            console.error(error);
         }
     },
 

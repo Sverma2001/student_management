@@ -29,7 +29,7 @@ export default {
     methods: {
         redirectToHome() {
             if (!this.getLoggedInStatus) {
-                this.$router.push('/home');
+                this.$router.push('/');
             }
             else {
                 this.$router.push('/login');

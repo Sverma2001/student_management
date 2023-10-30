@@ -3,11 +3,8 @@
     <div class="signup-box">
       <h1>Register</h1>
       <form @submit.prevent="signup()" class="signup-form">
-        <label for="fname">First Name:</label>
-        <input type="text" id="fname" name="fname" v-model="form.fname" required>
-
-        <label for="lname">Last Name:</label>
-        <input type="text" id="lname" name="lname" v-model="form.lname" required>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" v-model="form.name" required>
 
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" v-model="form.username" required>
@@ -21,9 +18,7 @@
           <p>Already have an account?</p>
           <router-link to="/login" style="text-decoration: none;">Login</router-link>
         </div>
-
         <button type="submit" class="signup-button">Sign up</button>
-
       </form>
     </div>
   </div>
@@ -35,8 +30,7 @@ export default {
   data() {
     return {
       form: {
-        fname: '',
-        lname: '',
+        name: '',
         username: '',
         password: ''
       },
@@ -56,8 +50,8 @@ export default {
           this.$router.push('/login');
         }
       }
-      catch (err) {
-        console.log(err)
+      catch (error) {
+        console.error(error)
       }
     }
   }
@@ -89,7 +83,7 @@ export default {
   border-radius: 5px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
   max-width: 500px;
-  width: 80%;
+  width: 40%;
   text-align: center;
 }
 

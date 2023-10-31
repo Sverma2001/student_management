@@ -58,13 +58,16 @@ export default {
         ...mapActions(['changeFormStatus']),
         ...mapActions('student',['addStudent']),
 
-        addStudents() {
+        async addStudents() {
             this.changeFormStatus();
-            //calling addStudent action to add student data received from the form
-            this.addStudent({ ...this.form })
-            .then((response) => {
+            try{
+                //calling addStudent action to add student data received from the form
+                const response = await this.addStudent({ ...this.form });
                 this.notify(response.data);
-            })
+            }
+            catch(error){
+                console.error(error);
+            }
         }
     }
 }

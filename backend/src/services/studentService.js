@@ -10,21 +10,21 @@ const addStudent = async (data) => {
     }
 }
 
-//fetching all the students
-const getStudents = async (page) => {
-    limit = 10;
+const fetchStudents = async (searchTerm, page, limit = 10) => {
     try {
+        // using ternary operation based on searchterm  
+        const students = searchTerm
+            ? await studentRepo.filterStudents(searchTerm, page, limit)
+            : await studentRepo.getStudents(page, limit);
+        
         const totalPage = await studentRepo.totalPages(limit);
-        const students = await studentRepo.getStudents(page, limit);
-        const student = {
+        return {
             students,
             currentPage: page,
-            totalPages: totalPage,
+            totalPages: totalPage ,
         };
-        return student;
-    }
-    catch (error) {
-        return error;
+    } catch (error) {
+        return searchTerm ? "Unable to filter data" : error;
     }
 }
 
@@ -48,27 +48,9 @@ const updateStudent = async (id, address, contact) => {
     }
 }
 
-//filtering students
-const filterStudents = async (query, pages) => {
-    limit = 10;
-    try {
-        const students = await studentRepo.filterStudents(query, pages, limit);
-        const student = {
-            students,
-            currentPage: pages,
-            totalPages: Math.ceil(students.length / limit) + 1,
-        };
-        return student;
-    }
-    catch {
-        return "Unable to filter data";
-    }
-}
-
 module.exports = {
     addStudent,
-    getStudents,
+    fetchStudents,
     deleteStudent,
-    updateStudent,
-    filterStudents
+    updateStudent
 };

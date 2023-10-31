@@ -54,11 +54,14 @@ export default {
         ...mapActions(['disableEdit']),
         ...mapActions('student', ['updateStudent']),
 
-        editStudent(data) {
-            this.updateStudent(data)
-                .then((response) => {
-                    this.notify(response.data);
-                })
+        async editStudent(data) {
+            try{
+                const response = await this.updateStudent(data)
+                this.notify(response.data);
+            }
+            catch(error){
+                console.error(error)
+            }
         }
     },
     created() {

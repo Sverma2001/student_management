@@ -20,7 +20,6 @@ export default {
     async addUser(context, formdata) {
         try {
             const response = await axios.post('http://localhost:3000/signup', formdata);
-            console.log("Response", response);
             return response;
         }
         catch (error) {
@@ -44,7 +43,7 @@ export default {
         }
 
         catch (error) {
-            context.commit('displayError', "An error occurred during login");
+            context.commit('displayError', error.response.data.errMessage);
         }
     }
 }

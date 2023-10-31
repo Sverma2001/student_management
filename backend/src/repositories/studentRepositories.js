@@ -20,7 +20,8 @@ const addStudent = async (data) => {
 const totalPages = async (limit) => {
     try {
         const totalStudents = await Student.countDocuments();
-        return Math.ceil(totalStudents / limit);
+        //it should return 1 if there is no students in the database
+        return Math.max(Math.ceil(totalStudents / limit), 1);
     }
     catch {
         throw new Error('Unable to fetch total pages');

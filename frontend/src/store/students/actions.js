@@ -5,12 +5,7 @@ import instance from '../../services/axiosService';
 export default {
     async setStudents(context, page) {
         try {
-            let response;
-            if (!context.state.searchTerm) {
-                response = await instance.get(`http://localhost:3000/getStudents`);
-            } else {
-                response = await instance.get(`http://localhost:3000/filterSearch/${context.state.searchTerm}?page=${page}`);
-            }
+            const response = await instance.get(`http://localhost:3000/getStudents?page=${page}&searchTerm=${context.state.searchTerm}`);
             context.commit('setStudents', response.data);
         } catch (error) {
             console.error(error);
@@ -48,7 +43,7 @@ export default {
         const student = { ...payload };
 
         try {
-            const updatedStudent = await axiosService.patch('http://localhost:3000/updateStudent', student);
+            const updatedStudent = await axiosService.put(`http://localhost:3000/updateStudent/${student.id}`, student);
             //calling to mutation for updating the students data in the store
             context.commit('updateStudent', student);
             return updatedStudent;

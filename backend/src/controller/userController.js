@@ -5,8 +5,8 @@ const bcrypt = require('bcryptjs');
 async function addUser(req, res) {
     const { name, username, password } = { ...req.body };
     try {
-        const user = await userService.addUser(name, username, password);
-        res.status(201).send(user);
+        const addedUser = await userService.addUser(name, username, password);
+        res.status(201).send(addedUser);
     }
     catch (err) {
         res.status(500).send({ err: 'Internal Server Error' });
@@ -16,15 +16,15 @@ async function addUser(req, res) {
 //get user
 async function getUser(req, res) {
     try {
-        const user = await userService.getUser();
-        res.status(200).send(user);
+        const fetchedUser = await userService.getUser();
+        res.status(200).send(fetchedUser);
     }
     catch (err) {
         res.status(500).send(err);
     }
 }
 
-async function isValidPassword (userPassword, enteredPassword) {
+async function isValidPassword(userPassword, enteredPassword) {
     return await bcrypt.compare(enteredPassword, userPassword);
 }
 

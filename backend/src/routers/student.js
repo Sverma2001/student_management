@@ -6,7 +6,6 @@ const verifyToken = require('../middleware/verifyToken');
 router.post('/addStudent',verifyToken, studentController.addStudent);
 router.get('/getStudents', verifyToken, studentController.getStudents);
 router.delete('/deleteStudent/:id',verifyToken, studentController.deleteStudent);
-router.patch('/updateStudent',verifyToken, studentController.updateStudent);
-router.get('/filterSearch/:searchTerm',verifyToken, studentController.filterStudents);
+router.put('/updateStudent/:id',verifyToken, studentController.updateStudent);
 
 module.exports = router;

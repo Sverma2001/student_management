@@ -84,11 +84,14 @@ export default {
             this.setStudents(this.getCurrentPage);
         },
 
-        handleDelete(id) {
-            this.deleteStudent(id)
-                .then((response) => {
-                    this.notify(response.data);
-                })
+        async handleDelete(id) {
+            try{
+                const response = await this.deleteStudent(id)
+                this.notify(response.data);
+            }
+            catch(error){
+                console.error(error)
+            }
         }
     },
 

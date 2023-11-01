@@ -7,11 +7,21 @@ export default{
     //setting login status to false
     disableLogin(state) {
         state.isLoggedIn = false;
-        state.errorMessage = '';
+        state.loginErrorMessage = '';
+        state.signupErrorMessage = '';
     },
 
-    //setting error message
-    displayError(state, payload) {
-        state.errorMessage = payload;
+    //setting loginerror message
+    loginError(state, payload) {
+        state.loginErrorMessage = payload;
+    },
+
+    //setting signup error message
+    signupError(state, payload) {
+        state.signupErrorMessage = payload;
+    },
+
+    clearSignupError(state){
+        state.signupErrorMessage = '';
     }
 }

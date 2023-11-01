@@ -12,8 +12,7 @@
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" v-model="form.password" required>
 
-        <p class="error">{{ errorMessage }}</p>
-
+        <p class="error">{{ getSignupErrorMessage }}</p>
         <div class="navigation">
           <p>Already have an account?</p>
           <router-link to="/login" style="text-decoration: none;">Login</router-link>
@@ -25,7 +24,7 @@
 </template> 
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 export default {
   data() {
     return {
@@ -34,23 +33,24 @@ export default {
         username: '',
         password: ''
       },
-      errorMessage: ''
     };
   },
+
+  computed: {
+    ...mapGetters('user', ['getSignupErrorMessage'])
+  },
   methods: {
-    ...mapActions('user', ['addUser']),
+    ...mapActions('user', ['addUser','clearSignupError']),
 
     async signup() {
       try {
         const response = await this.addUser(this.form)
-        if (response?.data?.includes('username already exists')) {
-          this.errorMessage = response.data
-        }
-        else {
+        if (response.status !== 409 && response.status !== 422) {
           this.$router.push('/login');
+          this.clearSignupError();
         }
       }
-      catch (error) {
+      catch (error) { 
         console.error(error)
       }
     }

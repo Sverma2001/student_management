@@ -7,7 +7,8 @@ export default{
     state(){
         return{
             isLoggedIn:false,   //checking if user is logged in
-            errorMessage:' '   // storing error message to display on the login form
+            loginErrorMessage:' ', // storing error message to display on the login form
+            signupErrorMessage:' ' // storing error message to display on the signup form
         }
     },
 

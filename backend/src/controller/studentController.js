@@ -39,7 +39,7 @@ async function deleteStudent(req, res) {
 //update student data
 async function updateStudent(req, res) {
     const id = req.params.id;
-    const { address, contact } = { ...req.body };
+    const { address, contact } = { ...req.body };  
     try {
         const updatedStudent = await studentService.updateStudent(id, address, contact);
         res.status(201).send(`${updatedStudent.name}'s data updated successfully`);

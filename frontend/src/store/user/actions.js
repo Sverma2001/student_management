@@ -12,8 +12,12 @@ export default {
     },
 
     //calling to mutation to update error message
-    displayError(context, payload) {
-        context.commit('displayError', payload);
+    loginError(context, payload) {
+        context.commit('loginError', payload);
+    },
+
+    clearSignupError(context) {
+        context.commit('clearSignupError');
     },
 
     //signup user
@@ -23,7 +27,11 @@ export default {
             return response;
         }
         catch (error) {
-            console.error(error);
+            const data = error.response?.data;
+            if (data && (data.includes('username already exists') || data.includes('should not contain'))) {
+                context.commit('signupError', data);
+            }
+            return error.response;
         }
     },
 
@@ -39,11 +47,10 @@ export default {
             }
             else
                 //setting error message
-                context.commit('displayError', response.data.error);
+                context.commit('loginError', response.data.error);
         }
-
         catch (error) {
-            context.commit('displayError', error.response.data.errMessage);
+            context.commit('loginError', error.response.data.errMessage);
         }
     }
 }

@@ -4,8 +4,13 @@ export default{
         return state.isLoggedIn;
     },
 
-    //fetching error message from the index.js
-    getErrorMessage(state){
-        return state.errorMessage;
+    //fetching login error message from the index.js
+    getLoginErrorMessage(state){
+        return state.loginErrorMessage;
+    },
+
+    //fetching signup error message from the index.js
+    getSignupErrorMessage(state){
+        return state.signupErrorMessage;
     }
 }

@@ -3,10 +3,15 @@ const bcrypt = require('bcryptjs');
 
 //adding user
 async function addUser(req, res) {
-    const { name, username, password } = { ...req.body };
+    const { name, username, password } = req.body ;
     try {
-        const addedUser = await userService.addUser(name, username, password);
-        res.status(201).send(addedUser);
+        const response = await userService.addUser(name, username, password);
+        if (response?.includes('username already exists')) {
+            res.status(409).send(response);
+        }
+        else {
+            res.status(201).send(response);
+        }
     }
     catch (err) {
         res.status(500).send({ err: 'Internal Server Error' });

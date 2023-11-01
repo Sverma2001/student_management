@@ -9,7 +9,7 @@
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" v-model="form.password" required>
           
-            <p v-if="!getLoggedInStatus" class="error">{{ getErrorMessage }}</p>
+            <p v-if="!getLoggedInStatus" class="error">{{ getLoginErrorMessage }}</p>
 
             <div class="navigation">
               <p>Don't have an account?</p>
@@ -33,7 +33,7 @@
       };
     },
     computed:{
-      ...mapGetters('user',['getLoggedInStatus','getErrorMessage'])
+      ...mapGetters('user',['getLoggedInStatus','getLoginErrorMessage'])
     },
 
     methods: {

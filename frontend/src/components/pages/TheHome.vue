@@ -9,23 +9,21 @@
   />
 
   <v-data-table-server
-    v-model:items-per-page="itemsPerPage"
+    v-model:items-per-page="studentsPerPage"
     :headers="headers"
     :items-length="getTotalStudents"
     :items="getStudents"
     :loading="loading"
     class="elevation-1"
     item-value="name"
-    @update:options="loadItems"
+    @update:options="loadStudents"
   >
-
     <template v-slot:item.actions="{ student }">
       <td>
         <v-btn @click="changeEditStatus(student)">Edit</v-btn>
         <v-btn @click="handleDelete(student.uuid)">Delete</v-btn>
       </td>
     </template>
-    
   </v-data-table-server>
 
   <add-student v-if="getFormStatus"></add-student>
@@ -49,8 +47,9 @@ export default {
 
   data() {
     return {
-      itemsPerPage: 5,
+      studentsPerPage: 10,
       searchTerm: "",
+      currentPage: 1,
       loading: false,
       headers: [
         { title: "Student Id", sortable: false, key: "uuid", align: "center" },
@@ -72,12 +71,22 @@ export default {
     return { notify };
   },
   computed: {
-    ...mapGetters("student", ["getStudents", "getTotalStudents","getSearchTerm"]),
+    ...mapGetters("student", [
+      "getStudents",
+      "getTotalStudents",
+      "getSearchTerm",
+      "getStudentsPerPage",
+    ]),
     ...mapGetters(["getFormStatus", "getEditStatus"]),
     ...mapGetters("user", ["getLoggedInStatus"]),
   },
   methods: {
-    ...mapActions("student", ["setStudents", "deleteStudent", "setSearchTerm"]),
+    ...mapActions("student", [
+      "setStudents",
+      "deleteStudent",
+      "setSearchTerm",
+      "setStudentsPerPage",
+    ]),
     ...mapActions(["changeEditStatus"]),
     ...mapActions("user", ["LoggedIn", "disableLogin"]),
 
@@ -85,7 +94,7 @@ export default {
       this.setSearchTerm(this.searchTerm);
       this.setStudents(this.getCurrentPage);
     },
-
+    
     async handleDelete(uuid) {
       try {
         const response = await this.deleteStudent(uuid);
@@ -94,6 +103,9 @@ export default {
         console.error(error);
       }
     },
+
+    loadStudents() {
+    }
   },
 
   created() {
@@ -130,7 +142,7 @@ export default {
   width: 99%;
 }
 
-h1{
+h1 {
   text-align: center;
 }
 

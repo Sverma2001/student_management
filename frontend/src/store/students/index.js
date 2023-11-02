@@ -10,6 +10,7 @@ export default{
         return{
             students:[],
             totalStudents:0,
+            limit:10,
             searchTerm:''
         }
     },

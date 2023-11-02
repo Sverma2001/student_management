@@ -11,4 +11,8 @@ export default {
     getSearchTerm(state){
         return state.searchTerm;
     },
+
+    getStudentsPerPage(state){
+        return state.limit;
+    }
 }

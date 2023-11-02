@@ -25,5 +25,9 @@ export default {
     //setting the search term
     setSearchTerm(state, payload) {
         state.searchTerm = payload;
+    },
+
+    setStudentsPerPage(state, payload) {
+        state.limit = payload
     }
 }

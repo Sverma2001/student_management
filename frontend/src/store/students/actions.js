@@ -5,8 +5,7 @@ import instance from '../../services/axiosService';
 export default {
     async setStudents(context, page) {
         try {
-            const limit = 5
-            const response = await instance.get(`http://localhost:3000/getStudents?page=${page}&limit=${limit}&searchTerm=${context.state.searchTerm}`);
+            const response = await instance.get(`http://localhost:3000/getStudents?page=${page}&limit=${context.state.limit}&searchTerm=${context.state.searchTerm}`);
             console.log(response.data.students)
             console.log(response.data.totalStudents);
             context.commit('setStudents', response.data);
@@ -60,5 +59,9 @@ export default {
     //listening to search term and then calling the searchTerm mutation to update it in store
     setSearchTerm(context, payload) {
         context.commit('setSearchTerm', payload);
+    },
+
+    setStudentsPerPage(context, payload) {
+        context.commit('setStudentsPerPage', payload);
     }
 }

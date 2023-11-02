@@ -26,7 +26,7 @@ async function getStudents(req, res) {
 
 //delete student from the database
 async function deleteStudent(req, res) {
-    const studentid = req.params.id;
+    const studentid = req.params.uuid;
     try {
         const deletedStudent = await studentService.deleteStudent(studentid);
         res.status(201).send(`${deletedStudent.name}'s data has been deleted successfully`);
@@ -38,10 +38,10 @@ async function deleteStudent(req, res) {
 
 //update student data
 async function updateStudent(req, res) {
-    const id = req.params.id;
+    const uuid = req.params.uuid;
     const { address, contact } = { ...req.body };  
     try {
-        const updatedStudent = await studentService.updateStudent(id, address, contact);
+        const updatedStudent = await studentService.updateStudent(uuid, address, contact);
         res.status(201).send(`${updatedStudent.name}'s data updated successfully`);
     }
     catch (error) {

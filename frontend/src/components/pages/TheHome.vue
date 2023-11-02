@@ -7,7 +7,7 @@
         <table>
             <thead>
                 <tr>
-                    <th>Serial_no</th>
+                    <th>Student Id</th>
                     <th>Name</th>
                     <th>Parent Name</th>
                     <th>Class</th>
@@ -17,8 +17,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(student) in getStudents" :key="student.id">
-                    <td>{{ student.id }}</td>
+                <tr v-for="(student) in getStudents" :key="student.uuid">
+                    <td>{{ student.uuid }}</td>
                     <td>{{ student.name }}</td>
                     <td>{{ student.parent }}</td>
                     <td>{{ student.class }}</td>
@@ -26,7 +26,7 @@
                     <td>{{ student.contact }}</td>
                     <td>
                         <button @click="changeEditStatus(student)" class="edit">Edit</button>
-                        <button @click="handleDelete(student.id)" class="delete">Delete</button>
+                        <button @click="handleDelete(student.uuid)" class="delete">Delete</button>
                     </td>
                 </tr>
             </tbody>
@@ -84,9 +84,9 @@ export default {
             this.setStudents(this.getCurrentPage);
         },
 
-        async handleDelete(id) {
+        async handleDelete(uuid) {
             try{
-                const response = await this.deleteStudent(id)
+                const response = await this.deleteStudent(uuid)
                 this.notify(response.data);
             }
             catch(error){

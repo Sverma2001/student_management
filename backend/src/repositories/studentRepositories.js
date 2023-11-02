@@ -1,11 +1,14 @@
 const Student = require('../models/studentSchema');
+// const { v4: uuidv4 } = require('uuid');
+const { generateCustomUuid} = require("custom-uuid");
 
 //adding student
 const addStudent = async (data) => {
     try {
-        const id = await getStudentId();
+        // const uuid = uuidv4();
+        const uuid = generateCustomUuid("1234567890ABC", 5);;
         const student = new Student({
-            id: id,
+            uuid: uuid,
             ...data
         });
         await student.save();
@@ -38,24 +41,10 @@ const getStudents = async (page, limit) => {
     }
 }
 
-//getting student id
-const getStudentId = async () => {
-    try {
-        const latestStudent = await Student.findOne().sort({ id: -1 });
-        if (!latestStudent) {
-            return 1;
-        } else {
-            return latestStudent.id + 1;
-        }
-    } catch {
-        throw new Error('Unable to fetch student id');
-    }
-}
-
 //deleting student
-const deleteStudent = async (id) => {
+const deleteStudent = async (uuid) => {
     try {
-        return await Student.findOneAndDelete({ id });
+        return await Student.findOneAndDelete({ uuid });
     }
     catch (err) {
         throw new Error('Unable to delete student');
@@ -63,9 +52,9 @@ const deleteStudent = async (id) => {
 }
 
 //updating student
-const updateStudent = async (id, address, contact) => {
+const updateStudent = async (uuid, address, contact) => {
     try {
-        return await Student.findOneAndUpdate({ id }, { address, contact });
+        return await Student.findOneAndUpdate({ uuid }, { address, contact });
     }
     catch (err) {
         throw new Error('Unable to update student');
@@ -100,6 +89,5 @@ module.exports = {
     updateStudent,
     filterStudents,
     getStudents,
-    totalPages,
-    getStudentId
+    totalPages
 };

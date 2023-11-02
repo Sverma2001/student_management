@@ -12,14 +12,14 @@ export default {
     },
 
     //deleting the student data from the students array
-    deleteStudent(state, id) {
-        const index = state.students.findIndex((student) => student.id === id);
+    deleteStudent(state, uuid) {
+        const index = state.students.findIndex((student) => student.uuid === uuid);
         state.students.splice(index, 1);
     },
 
     //updating the student data in the students array
     updateStudent(state, payload) {
-        const studentIndex = state.students.findIndex(student => student.id === payload.id);
+        const studentIndex = state.students.findIndex(student => student.uuid === payload.uuid);
         state.students.splice(studentIndex, 1, payload);
     },
 

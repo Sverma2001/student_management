@@ -1,8 +1,9 @@
+const { string } = require('joi');
 const mongoose = require('mongoose');
 
 const studentSchema = new mongoose.Schema({
-    id: {
-        type: Number,
+    uuid: {
+        type: String,
         required: true,
         autoIncrement:true
     },

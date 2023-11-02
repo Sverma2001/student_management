@@ -18,7 +18,7 @@
                 <label for="address">Address:</label>
                 <input type="text" id="address" name="address" v-model="form.address">
 
-                <label for="contact">Name:</label>
+                <label for="contact">Contact:</label>
                 <input type="text" id="contact" pattern="[0-9]{10}" name="contact" v-model="form.contact">
 
                 <input type="submit" value="Save Changes">

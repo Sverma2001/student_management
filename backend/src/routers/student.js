@@ -6,7 +6,7 @@ const studentValidation = require('../middleware/validations/studentValidation')
 
 router.post('/addStudent', verifyToken, studentValidation.addStudentValidation, studentController.addStudent);
 router.get('/getStudents', verifyToken, studentController.getStudents);
-router.delete('/deleteStudent/:id', verifyToken, studentValidation.deleteStudentValidation, studentController.deleteStudent);
-router.put('/updateStudent/:id', verifyToken, studentValidation.updateStudentValidation, studentController.updateStudent);
+router.delete('/deleteStudent/:uuid', verifyToken, studentValidation.deleteStudentValidation, studentController.deleteStudent);
+router.put('/updateStudent/:uuid', verifyToken, studentValidation.updateStudentValidation, studentController.updateStudent);
 
 module.exports = router;

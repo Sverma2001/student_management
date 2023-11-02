@@ -24,10 +24,10 @@ function addStudentValidation(req, res, next) {
         address: Joi.string()
             .trim()
             .min(3)
-            .required()
+            .allow('', null)
             .custom(sanitizeContent),
         contact: Joi.string()
-            .required()
+            .allow('', null)
             .custom(sanitizeContent)
     });
 
@@ -40,7 +40,7 @@ function addStudentValidation(req, res, next) {
 
 function deleteStudentValidation(req, res, next) {
     const schema = Joi.object().keys({
-        id: Joi.number().integer().required(),
+        uuid: Joi.string().required(),
     });
 
     const { error } = schema.validate(req.params);
@@ -52,7 +52,7 @@ function deleteStudentValidation(req, res, next) {
 
 const updateStudentValidation = (req, res, next) => {
     const paramSchema = Joi.object().keys({
-        id: Joi.string().required(),
+        uuid: Joi.string().required(),
     });
 
     const { error: paramError } = paramSchema.validate(req.params);

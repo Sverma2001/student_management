@@ -44,7 +44,7 @@ export default {
         const student = { address, contact };
 
         try {
-            const updatedStudent = await axiosService.put(`http://localhost:3000/updateStudent/${payload.id}`, student);
+            const updatedStudent = await axiosService.put(`http://localhost:3000/updateStudent/${payload.uuid}`, student);
             //calling to mutation for updating the students data in the store
             context.commit('updateStudent', student);
             return updatedStudent;

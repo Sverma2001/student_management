@@ -43,7 +43,8 @@
         await this.checkAuth({...this.form});
         if(this.getLoggedInStatus) {
           this.$router.push('/home');
-          localStorage.setItem('auth', this.getLoggedInStatus) ;   //setting login status in local storage after navigating 
+          //setting login status in local storage after navigating 
+          localStorage.setItem('auth', this.getLoggedInStatus) ;   
         }
       },
     },

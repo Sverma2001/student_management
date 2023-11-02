@@ -29,9 +29,9 @@ const fetchStudents = async (searchTerm, page, limit = 10) => {
 }
 
 //deleting the student
-const deleteStudent = async (id) => {
+const deleteStudent = async (uuid) => {
     try {
-        return await studentRepo.deleteStudent(id);
+        return await studentRepo.deleteStudent(uuid);
     }
     catch {
         return "Unable to delete";
@@ -39,9 +39,9 @@ const deleteStudent = async (id) => {
 }
 
 //updating the student
-const updateStudent = async (id, address, contact) => {
+const updateStudent = async (uuid, address, contact) => {
     try {
-        return await studentRepo.updateStudent(id, address, contact);
+        return await studentRepo.updateStudent(uuid, address, contact);
     }
     catch {
         return "Unable to update";

@@ -9,8 +9,7 @@ export default{
     state(){
         return{
             students:[],
-            totalPages:1,
-            currentPage:1,
+            totalStudents:0,
             searchTerm:''
         }
     },

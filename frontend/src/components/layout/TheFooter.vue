@@ -1,40 +1,27 @@
 <template>
-    <footer class="footer">
-      <div class="footer-content">
-        <p>&copy; {{ currentYear }} Argusoft private ltd. All Rights Reserved</p>
-      </div>
-    </footer>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        currentYear: new Date().getFullYear(),
-      };
-    },
-  };
-  </script>
-  
-  <style scoped>
-  .footer {
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    padding: 15px;
-    font-weight: bold;
-    bottom: 0;
-    position: fixed;
-    width: 100%;
-  }
-  
-  .footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  .footer p {
-    margin: 0;
-    font-size: 14px;
-  }
-  </style>
+  <div class="bg-teal d-flex w-100 align-center px-4">
+    <strong>Get connected with us on social networks!</strong>
+    <v-spacer></v-spacer>
+    <v-btn
+      v-for="icon in icons"
+      :key="icon"
+      class="mx-4"
+      :icon="icon"
+      variant="plain"
+      size="small"
+    ></v-btn>
+  </div>
+
+  <div class="px-4 py-2 bg-black text-center w-100">
+    &copy{{ new Date().getFullYear() }} —
+    <strong> Argusoft || All Rights Reserved</strong>
+  </div>
+</template>
+
+<script>
+export default {
+  data: () => ({
+    icons: ["mdi-facebook", "mdi-twitter", "mdi-linkedin", "mdi-instagram"],
+  }),
+};
+</script>

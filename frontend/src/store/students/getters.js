@@ -4,13 +4,11 @@ export default {
         return state.students;
     },
 
-    //fetching current page from the index.js
-    getCurrentPage(state){
-        return state.currentPage;
+    getTotalStudents(state){
+        return state.totalStudents;
     },
 
-    //fetching total pages from the index.js
-    getTotalPages(state){
-        return state.totalPages;
-    }
+    getSearchTerm(state){
+        return state.searchTerm;
+    },
 }

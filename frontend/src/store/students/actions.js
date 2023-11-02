@@ -5,7 +5,10 @@ import instance from '../../services/axiosService';
 export default {
     async setStudents(context, page) {
         try {
-            const response = await instance.get(`http://localhost:3000/getStudents?page=${page}&searchTerm=${context.state.searchTerm}`);
+            const limit = 5
+            const response = await instance.get(`http://localhost:3000/getStudents?page=${page}&limit=${limit}&searchTerm=${context.state.searchTerm}`);
+            console.log(response.data.students)
+            console.log(response.data.totalStudents);
             context.commit('setStudents', response.data);
         } catch (error) {
             console.error(error);

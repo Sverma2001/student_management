@@ -2,8 +2,7 @@ export default {
     //setting student data ,current page and total pages
     setStudents(state, students) {
         state.students = students.students;
-        state.totalPages = students.totalPages;
-        state.currentPage = students.currentPage;
+        state.totalStudents = students.totalStudents;
     },
 
     //pushing the student data to the students array

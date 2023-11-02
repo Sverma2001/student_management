@@ -13,10 +13,11 @@ async function addStudent(req, res) {
 
 //get all students
 async function getStudents(req, res) {
-    const searchTerm = req.query.searchTerm;
     const page = parseInt(req.query.page) || 1;
+    const limit = req.query.limit
+    const searchTerm = req.query.searchTerm;
     try {
-        const fetchedStudents = await studentService.fetchStudents(searchTerm, page);
+        const fetchedStudents = await studentService.fetchStudents(page,limit,searchTerm);
         res.status(200).send(fetchedStudents);
     }
     catch (error) {

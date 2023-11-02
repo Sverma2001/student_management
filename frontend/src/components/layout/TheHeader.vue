@@ -6,7 +6,7 @@
             <div style="display: flex; align-items: center;">
                 <button @click="changeFormStatus" v-if="getLoggedInStatus">Add Student</button>
                 <div class="dropdown" v-if="getLoggedInStatus">
-                    <img id="profile" src="@/assets/user.png">
+                    <img id="profile" >
                     <div class="dropdown-content">
                         <p @click="logout()">Logout</p>
                     </div>
@@ -19,6 +19,11 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 export default {
+    // data(){
+    //     return{
+    //         showNav:false
+    //     }
+    // },
     computed: {
         ...mapGetters('user', ['getLoggedInStatus'])
     },
@@ -56,7 +61,7 @@ header {
     color: yellow;
     font-size: 35px;
     font-weight: bold;
-    margin-left: 20px;
+    margin-left: 100px;
 }
 
 .navbar button {

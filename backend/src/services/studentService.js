@@ -10,19 +10,12 @@ const addStudent = async (data) => {
     }
 }
 
-const fetchStudents = async (searchTerm, page, limit = 10) => {
+const fetchStudents = async (pageNumber, studentsPerPage, searchTerm) => {
     try {
-        // using ternary operation based on searchterm  
         const students = searchTerm
-            ? await studentRepo.filterStudents(searchTerm, page, limit)
-            : await studentRepo.getStudents(page, limit);
-        
-        const totalPage = await studentRepo.totalPages(limit);
-        return {
-            students,
-            currentPage: page,
-            totalPages: totalPage ,
-        };
+            ? await studentRepo.filterStudents(pageNumber, studentsPerPage, searchTerm)
+            : await studentRepo.getStudents(pageNumber, studentsPerPage);
+        return students;
     } catch (error) {
         return searchTerm ? "Unable to filter data" : error;
     }

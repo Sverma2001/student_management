@@ -1,17 +1,16 @@
 <template>
   <div>
     <the-header></the-header>
-    <router-view></router-view>
-    <the-footer></the-footer>
+    <router-view>
+    </router-view>
+    <the-footer></the-footer> 
   </div>
 </template>
 
 <script>
 import TheHeader from './components/layout/TheHeader.vue';
 import  TheFooter  from './components/layout/TheFooter.vue';
-
 export default {
-
   components: {
     TheHeader,
     TheFooter,
@@ -20,7 +19,7 @@ export default {
 </script>
 
 <style>
-#app {
+/* #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -29,5 +28,5 @@ export default {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
+} */
 </style>

@@ -1,6 +1,6 @@
 const Student = require('../models/studentSchema');
 // const { v4: uuidv4 } = require('uuid');
-const { generateCustomUuid} = require("custom-uuid");
+const { generateCustomUuid } = require("custom-uuid");
 
 //adding student
 const addStudent = async (data) => {
@@ -32,10 +32,12 @@ const totalPages = async (limit) => {
 }
 
 //getting students by limit
-const getStudents = async (page, limit) => {
-    const skip = (page - 1) * limit;
+const getStudents = async (pageNumber, limit) => {
+    const skip = (pageNumber - 1) * limit;
     try {
-        return await Student.find().skip(skip).limit(limit);
+        const totalStudents = await Student.countDocuments();
+        const students = await Student.find().skip(skip).limit(limit);
+        return {totalStudents, students};
     } catch {
         throw new Error('Unable to fetch students');
     }
@@ -62,8 +64,8 @@ const updateStudent = async (uuid, address, contact) => {
 }
 
 //filtering students
-const filterStudents = async (query, pages, limit) => {
-    const skip = (pages - 1) * limit;
+const filterStudents = async (pageNumber, limit, query) => {
+    const skip = (pageNumber - 1) * limit;
 
     const searchQuery = {
         $or: [
@@ -74,9 +76,10 @@ const filterStudents = async (query, pages, limit) => {
             { contact: { $regex: query, $options: 'i' } }
         ],
     }
-
     try {
-        return await Student.find(searchQuery).skip(skip).limit(limit);
+        const students = await Student.find(searchQuery).skip(skip).limit(limit);
+        const totalStudents = await Student.countDocuments(searchQuery);
+        return { totalStudents, students };
     }
     catch (err) {
         throw new Error('Unable to filter students');

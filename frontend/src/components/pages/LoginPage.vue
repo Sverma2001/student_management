@@ -1,21 +1,21 @@
 <template>
     <div class="login-container">
       <div class="login-box">
-        <h1>Login</h1>
+        <h1>{{$t("Login")}}</h1>
         <form @submit.prevent="login()" class="login-form">
-            <label for="username">Username:</label>
+            <label for="username">{{$t("Username")}}</label>
             <input type="text" id="username" name="username" v-model="form.username" required>
           
-            <label for="password">Password:</label>
+            <label for="password">{{$t("Password")}}</label>
             <input type="password" id="password" name="password" v-model="form.password" required>
           
             <p v-if="!getLoggedInStatus" class="error">{{ getLoginErrorMessage }}</p>
 
             <div class="navigation">
-              <p>Don't have an account?</p>
-              <router-link to="/signup" style="text-decoration: none;">Register Here</router-link>
+              <p>{{$t("Don't have an account?")}}</p>
+              <router-link to="/signup" style="text-decoration: none;">{{$t("Register Here")}}</router-link>
             </div>
-          <button type="submit" class="login-button">Login</button>
+          <button type="submit" class="login-button">{{$t("Login")}}</button>
         </form>
       </div>
     </div>

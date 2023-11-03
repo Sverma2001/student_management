@@ -17,8 +17,7 @@ export default {
     async addStudent(context, payload) {
         try {
             const addedStudent = await axiosService.post('http://localhost:3000/addStudent', payload);
-            //updating the students array in the store
-            context.commit('addStudent', payload);
+            context.commit('addStudent', addedStudent.data);
             return addedStudent;
         }
         catch (error) {
@@ -47,7 +46,7 @@ export default {
         try {
             const updatedStudent = await axiosService.put(`http://localhost:3000/updateStudent/${payload.uuid}`, student);
             //calling to mutation for updating the students data in the store
-            context.commit('updateStudent', student);
+            context.commit('updateStudent', payload);
             return updatedStudent;
         }
         catch (error) {

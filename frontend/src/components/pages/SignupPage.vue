@@ -1,23 +1,23 @@
 <template>
   <div class="signup-container">
     <div class="signup-box">
-      <h1>Register</h1>
+      <h1>{{$t("Register")}}</h1>
       <form @submit.prevent="signup()" class="signup-form">
-        <label for="name">Name:</label>
+        <label for="name">{{$t("Name")}}</label>
         <input type="text" id="name" name="name" v-model="form.name" required>
 
-        <label for="username">Username:</label>
+        <label for="username">{{$t("Username")}}</label>
         <input type="text" id="username" name="username" v-model="form.username" required>
 
-        <label for="password">Password:</label>
+        <label for="password">{{$t("Password")}}</label>
         <input type="password" id="password" name="password" v-model="form.password" required>
 
         <p class="error">{{ getSignupErrorMessage }}</p>
         <div class="navigation">
-          <p>Already have an account?</p>
-          <router-link to="/login" style="text-decoration: none;">Login</router-link>
+          <p>{{$t("Already have an account?")}}</p>
+          <router-link to="/login" style="text-decoration: none;">{{$t("Login")}}</router-link>
         </div>
-        <button type="submit" class="signup-button">Sign up</button>
+        <button type="submit" class="signup-button">{{$t("Sign up")}}</button>
       </form>
     </div>
   </div>

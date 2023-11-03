@@ -3,8 +3,8 @@ const studentService = require('../services/studentService');
 //adding student to the database
 async function addStudent(req, res) {
     try {
-        await studentService.addStudent(req.body);
-        res.status(201).send(`${req.body.name} added successfully`);
+        const response = await studentService.addStudent(req.body);
+        res.status(201).send(response);
     }
     catch (error) {
         res.status(500).send({ error: 'Adding Student Failed' });
@@ -43,7 +43,8 @@ async function updateStudent(req, res) {
     const { address, contact } = { ...req.body };  
     try {
         const updatedStudent = await studentService.updateStudent(uuid, address, contact);
-        res.status(201).send(`${updatedStudent.name}'s data updated successfully`);
+        console.log(updatedStudent)
+        res.status(201).send(updatedStudent);
     }
     catch (error) {
         res.status(500).send({ error: 'Updating Student Failed' });

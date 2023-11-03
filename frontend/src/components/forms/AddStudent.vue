@@ -2,7 +2,7 @@
     <div>
         <v-dialog v-model="dialog" max-width="500px" persistent>
             <v-card>
-                <v-card-title> Registration Form </v-card-title>
+                <v-card-title> {{$t("Registration Form")}} </v-card-title>
                 <v-card-text>
                     <v-form @submit.prevent="submitForm" ref="form">
                         <v-text-field v-model="form.name" label="Name" :rules="nameRule" required></v-text-field>
@@ -14,8 +14,8 @@
                 </v-card-text>
 
                 <v-card-actions>
-                    <v-btn @click="closeDialog">Close</v-btn>
-                    <v-btn color="primary" @click="submitForm" :disabled="isFormValid">Submit</v-btn>
+                    <v-btn @click="closeDialog">{{$t("Close")}}</v-btn>
+                    <v-btn color="primary" @click="submitForm" :disabled="isFormValid">{{$t("Submit")}}</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -85,7 +85,8 @@ export default {
             try {
                 //calling addStudent action to add student data received from the form
                 const response = await this.addStudent({ ...this.form });
-                this.notify(response.data);
+                console.log(response.data);
+                this.notify(`${response.data.name} added successfully` );
             } catch (error) {
                 console.error(error);
             }

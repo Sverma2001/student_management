@@ -1,35 +1,34 @@
 <template>
   <v-container>
+    <h1>{{ $t("Student Data") }}</h1>
 
-    <h1>Student Data</h1>
-    
     <v-text-field
-    v-model="searchTerm"
-    label="Search"
-    class="float-right"
-    style="width: 300px"
-    @input="loadStudents('1',studentsPerPage,'')"
-  />
-  <v-data-table-server
-  v-model:items-per-page="studentsPerPage"
-    :headers="headers"
-    :items-length="getTotalStudents"
-    :items="getStudents"
-    :loading="loading"
-    :search="searchTerm"
-    item-value="name"
-    class="elevation-2"
-    @update:options="loadStudents"
+      v-model="searchTerm"
+      label="Search"
+      class="float-right"
+      style="width: 300px"
+      @input="loadStudents('1', studentsPerPage, '')"
+    />
+    <v-data-table-server
+      v-model:items-per-page="studentsPerPage"
+      :headers="headers"
+      :items-length="getTotalStudents"
+      :items="getStudents"
+      :loading="loading"
+      :search="searchTerm"
+      item-value="name"
+      class="elevation-2"
+      @update:options="loadStudents"
     >
-    <template v-slot:item.actions="{ item }">
-      <td>
-        <v-btn @click="changeEditStatus(item)">Edit</v-btn>
-        <v-btn @click="handleDelete(item.uuid)">Delete</v-btn>
-      </td>
-    </template>
-  </v-data-table-server>
-</v-container>
-  
+      <template v-slot:item.actions="{ item }">
+        <td>
+          <v-btn @click="changeEditStatus(item)">Edit</v-btn>
+          <v-btn @click="handleDelete(item.uuid)">Delete</v-btn>
+        </td>
+      </template>
+    </v-data-table-server>
+  </v-container>
+
   <add-student v-if="getFormStatus"></add-student>
   <edit-student v-if="getEditStatus"></edit-student>
   <sidebar v-if="getLoggedInStatus"></sidebar>
@@ -57,13 +56,13 @@ export default {
       totalStudents: 0,
       loading: false,
       headers: [
-        { title: "Student Id", sortable: false, key: "uuid", align:"center"},
-        { title: "Name", sortable: false, key: "name", align:"center"},
-        { title: "Parent", sortable: false, key: "parent", align:"center"},
-        { title: "Class", sortable: false, key: "class", align:"center"},
-        { title: "Address", sortable: false, key: "address", align:"center"},
-        { title: "Contact", sortable: false, key: "contact", align:"center"},
-        { title: "Actions", sortable: false, key: "actions", align:"center"},
+        { title: "Student Id", sortable: false, key: "uuid", align: "center" },
+        { title: "Name", sortable: false, key: "name", align: "center" },
+        { title: "Parent", sortable: false, key: "parent", align: "center" },
+        { title: "Class", sortable: false, key: "class", align: "center" },
+        { title: "Address", sortable: false, key: "address", align: "center" },
+        { title: "Contact", sortable: false, key: "contact", align: "center" },
+        { title: "Actions", sortable: false, key: "actions", align: "center" },
       ],
     };
   },
@@ -78,24 +77,18 @@ export default {
   watch: {
     studentsPerPage(value) {
       this.loadStudents(value);
-    }
+    },
   },
   computed: {
-    ...mapGetters("student", [
-      "getStudents",
-      "getTotalStudents",
-    ]),
+    ...mapGetters("student", ["getStudents", "getTotalStudents"]),
     ...mapGetters(["getFormStatus", "getEditStatus"]),
     ...mapGetters("user", ["getLoggedInStatus"]),
   },
   methods: {
-    ...mapActions("student", [
-      "setStudents",
-      "deleteStudent",
-    ]),
+    ...mapActions("student", ["setStudents", "deleteStudent"]),
     ...mapActions(["changeEditStatus"]),
     ...mapActions("user", ["LoggedIn", "disableLogin"]),
-    
+
     async handleDelete(uuid) {
       try {
         const response = await this.deleteStudent(uuid);
@@ -105,20 +98,24 @@ export default {
       }
     },
 
-    async loadStudents({page}) {
-      this.currentPage = page
-      this.loading = true
-      const response = await this.setStudents({page,studentsPerPage:this.studentsPerPage,searchTerm:this.searchTerm})
-      if(response.status===200){
-        this.totalStudents = response.data.totalStudents
-        this.loading = false
-        return
+    async loadStudents({ page }) {
+      this.currentPage = page;
+      this.loading = true;
+      const response = await this.setStudents({
+        page,
+        studentsPerPage: this.studentsPerPage,
+        searchTerm: this.searchTerm,
+      });
+      if (response.status === 200) {
+        this.totalStudents = response.data.totalStudents;
+        this.loading = false;
+        return;
       }
-    }
+    },
   },
 
   created() {
-    this.setStudents('1',5,'');
+    this.setStudents("1", 5, "");
     //checking if user is logged in
     if (localStorage.getItem("auth")) {
       this.LoggedIn();
@@ -133,8 +130,12 @@ export default {
 .v-data-table {
   background-color: aliceblue;
   text-align: center;
-  font-weight: bold;
   color: black;
   width: 80vw;
+  padding: 20px;
+}
+
+h1{
+  font-weight: bold;
 }
 </style>

@@ -20,14 +20,5 @@ export default {
     updateStudent(state, payload) {
         const studentIndex = state.students.findIndex(student => student.uuid === payload.uuid);
         state.students.splice(studentIndex, 1, payload);
-    },
-
-    //setting the search term
-    setSearchTerm(state, payload) {
-        state.searchTerm = payload;
-    },
-
-    setStudentsPerPage(state, payload) {
-        state.limit = payload
     }
 }

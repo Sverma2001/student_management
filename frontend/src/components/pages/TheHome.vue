@@ -1,31 +1,35 @@
 <template>
-  <h1>Student Data</h1>
-  <v-text-field
+  <v-container>
+
+    <h1>Student Data</h1>
+    
+    <v-text-field
     v-model="searchTerm"
     label="Search"
     class="float-right"
     style="width: 300px"
-    @input="search()"
+    @input="loadStudents('1',studentsPerPage,'')"
   />
-
   <v-data-table-server
-    v-model:items-per-page="studentsPerPage"
+  v-model:items-per-page="studentsPerPage"
     :headers="headers"
     :items-length="getTotalStudents"
     :items="getStudents"
     :loading="loading"
-    class="elevation-1"
+    :search="searchTerm"
     item-value="name"
+    class="elevation-2"
     @update:options="loadStudents"
-  >
-    <template v-slot:item.actions="{ student }">
+    >
+    <template v-slot:item.actions="{ item }">
       <td>
-        <v-btn @click="changeEditStatus(student)">Edit</v-btn>
-        <v-btn @click="handleDelete(student.uuid)">Delete</v-btn>
+        <v-btn @click="changeEditStatus(item)">Edit</v-btn>
+        <v-btn @click="handleDelete(item.uuid)">Delete</v-btn>
       </td>
     </template>
   </v-data-table-server>
-
+</v-container>
+  
   <add-student v-if="getFormStatus"></add-student>
   <edit-student v-if="getEditStatus"></edit-student>
   <sidebar v-if="getLoggedInStatus"></sidebar>
@@ -47,18 +51,19 @@ export default {
 
   data() {
     return {
-      studentsPerPage: 10,
       searchTerm: "",
+      studentsPerPage: 5,
       currentPage: 1,
+      totalStudents: 0,
       loading: false,
       headers: [
-        { title: "Student Id", sortable: false, key: "uuid", align: "center" },
-        { title: "Name", sortable: false, key: "name", align: "center" },
-        { title: "Parent", sortable: false, key: "parent", align: "center" },
-        { title: "Class", sortable: false, key: "class", align: "center" },
-        { title: "Address", sortable: false, key: "address", align: "center" },
-        { title: "Contact", sortable: false, key: "contact", align: "center" },
-        { title: "Actions", sortable: false, key: "actions" },
+        { title: "Student Id", sortable: false, key: "uuid", align:"center"},
+        { title: "Name", sortable: false, key: "name", align:"center"},
+        { title: "Parent", sortable: false, key: "parent", align:"center"},
+        { title: "Class", sortable: false, key: "class", align:"center"},
+        { title: "Address", sortable: false, key: "address", align:"center"},
+        { title: "Contact", sortable: false, key: "contact", align:"center"},
+        { title: "Actions", sortable: false, key: "actions", align:"center"},
       ],
     };
   },
@@ -70,12 +75,15 @@ export default {
     };
     return { notify };
   },
+  watch: {
+    studentsPerPage(value) {
+      this.loadStudents(value);
+    }
+  },
   computed: {
     ...mapGetters("student", [
       "getStudents",
       "getTotalStudents",
-      "getSearchTerm",
-      "getStudentsPerPage",
     ]),
     ...mapGetters(["getFormStatus", "getEditStatus"]),
     ...mapGetters("user", ["getLoggedInStatus"]),
@@ -84,16 +92,9 @@ export default {
     ...mapActions("student", [
       "setStudents",
       "deleteStudent",
-      "setSearchTerm",
-      "setStudentsPerPage",
     ]),
     ...mapActions(["changeEditStatus"]),
     ...mapActions("user", ["LoggedIn", "disableLogin"]),
-
-    search() {
-      this.setSearchTerm(this.searchTerm);
-      this.setStudents(this.getCurrentPage);
-    },
     
     async handleDelete(uuid) {
       try {
@@ -104,12 +105,20 @@ export default {
       }
     },
 
-    loadStudents() {
+    async loadStudents({page}) {
+      this.currentPage = page
+      this.loading = true
+      const response = await this.setStudents({page,studentsPerPage:this.studentsPerPage,searchTerm:this.searchTerm})
+      if(response.status===200){
+        this.totalStudents = response.data.totalStudents
+        this.loading = false
+        return
+      }
     }
   },
 
   created() {
-    this.setStudents(this.getCurrentPage);
+    this.setStudents('1',5,'');
     //checking if user is logged in
     if (localStorage.getItem("auth")) {
       this.LoggedIn();
@@ -121,97 +130,11 @@ export default {
 </script>
 
 <style scoped>
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-
-.container {
-  width: 90%;
-  height: 100vh;
-  /* margin-bottom: 200px; */
-  margin-left: 100px;
-  font-weight: bold;
-  display: block;
-}
-
-.search-bar {
-  display: flex;
-  justify-content: right;
-  width: 99%;
-}
-
-h1 {
+.v-data-table {
+  background-color: aliceblue;
   text-align: center;
-}
-
-input {
-  margin-top: 20px;
-  justify-self: right;
-  border-radius: 10px;
-  width: 40%;
-  padding: 10px;
   font-weight: bold;
-}
-
-.edit,
-.delete {
-  border: none;
-  font-size: 15px;
-  font-weight: bold;
-  margin-right: 10px;
-  padding: 10px 20px;
-  cursor: pointer;
-}
-
-.edit {
-  background-color: orange;
-}
-
-.delete {
-  background-color: red;
-  color: white;
+  color: black;
+  width: 80vw;
 }
 </style>
-
-<!-- <div class="container">
-    <div class="search-bar">
-        <input type="text" class="search-input" id="searchInput" v-model="searchTerm"
-            placeholder="Search for students..." @input="search()">
-    </div>
-    <v-table>
-        <thead>
-            <th>
-                <th>Student Id</th>
-                <th>Name</th>
-                <th>Parent Name</th>
-                <th>Class</th>
-                <th>Address</th>
-                <th>Contact</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="(student) in getStudents" :key="student.uuid">
-                <td>{{ student.uuid }}</td>
-                <td>{{ student.name }}</td>
-                <td>{{ student.parent }}</td>
-                <td>{{ student.class }}</td>
-                <td>{{ student.address }}</td>
-                <td>{{ student.contact }}</td>
-                <td>
-                    <button @click="changeEditStatus(student)" class="edit">Edit</button>
-                    <button @click="handleDelete(student.uuid)" class="delete">Delete</button>
-                </td>
-            </tr>
-        </tbody>
-    </v-table>
-
-    <div class="pagination">
-        <button @click="setStudents(getCurrentPage - 1)" :disabled="getCurrentPage === 1">Previous</button>
-        <span>Page {{ getCurrentPage }} of {{ getTotalPages }}</span>
-        <button @click="setStudents(getCurrentPage + 1)" :disabled="getCurrentPage === getTotalPages">Next</button>
-    </div>
-
-</div> -->

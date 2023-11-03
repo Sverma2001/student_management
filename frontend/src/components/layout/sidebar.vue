@@ -15,11 +15,9 @@
           <v-divider></v-divider>
   
           <v-list density="compact" nav>
-            <v-list-item prepend-icon="mdi-add" title="My Files" value="myfiles"></v-list-item>
+            <v-list-item prepend-icon="mdi-account-multiple" title="My Files" value="myfiles"></v-list-item>
             <v-list-item prepend-icon="mdi-logout" title="Logout" value="logout"></v-list-item>
           </v-list>
         </v-navigation-drawer>
-  
-        <v-main style="height: 250px"></v-main>
     </v-app>
   </template>

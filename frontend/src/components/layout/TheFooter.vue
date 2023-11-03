@@ -12,7 +12,7 @@
     ></v-btn>
   </div>
 
-  <div class="px-4 py-2 bg-black text-center w-100">
+  <div class="px-4 py-2 bg-teal text-center w-100">
     &copy{{ new Date().getFullYear() }} —
     <strong> Argusoft || All Rights Reserved</strong>
   </div>

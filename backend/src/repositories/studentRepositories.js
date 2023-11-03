@@ -6,9 +6,9 @@ const { generateCustomUuid } = require("custom-uuid");
 const addStudent = async (data) => {
     try {
         // const uuid = uuidv4();
-        const uuid = generateCustomUuid("1234567890ABC", 5);;
+        const uuid = generateCustomUuid("123456789", 4);;
         const student = new Student({
-            uuid: uuid,
+            uuid: `S${uuid}`,
             ...data
         });
         await student.save();

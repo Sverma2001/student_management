@@ -4,14 +4,11 @@ import studentGetters from "./getters";
 
 export default{
     namespaced:true,
-
     //storing data
     state(){
         return{
             students:[],
             totalStudents:0,
-            limit:10,
-            searchTerm:''
         }
     },
     mutations:studentMutations,

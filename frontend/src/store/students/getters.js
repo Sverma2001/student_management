@@ -6,13 +6,5 @@ export default {
 
     getTotalStudents(state){
         return state.totalStudents;
-    },
-
-    getSearchTerm(state){
-        return state.searchTerm;
-    },
-
-    getStudentsPerPage(state){
-        return state.limit;
     }
 }

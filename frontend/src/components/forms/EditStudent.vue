@@ -1,29 +1,26 @@
 <template>
     <div>
-        <div id="backdrop"></div>
-        <div class="form-container">
-            <button id="overlay" @click="disableEdit()">X</button>
-            <h2>Updation Form</h2>
-            <form @submit.prevent="editStudent(form)">
-
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" disabled v-model="form.name">
-
-                <label for="parent name">Parent Name:</label>
-                <input type="text" id="parent name" name="parent name" disabled v-model="form.parent">
-
-                <label for="class">Class:</label>
-                <input type="text" id="class" name="class" disabled v-model="form.class">
-
-                <label for="address">Address:</label>
-                <input type="text" id="address" name="address" v-model="form.address">
-
-                <label for="contact">Contact:</label>
-                <input type="text" id="contact" pattern="[0-9]{10}" name="contact" v-model="form.contact">
-
-                <input type="submit" value="Save Changes">
-            </form>
-        </div>
+        <v-dialog v-model="dialog" max-width="500px" persistent>
+            <v-card>
+                <v-card-title>
+                    Updation Form
+                </v-card-title>
+                <v-card-text>
+                    <v-form @submit.prevent="submitForm" ref="form">
+                        <v-text-field v-model="form.name" label="Name" disabled></v-text-field>
+                        <v-text-field v-model="form.parent" label="Parent Name" disabled></v-text-field>
+                        <v-text-field v-model="form.class" label="Class" disabled></v-text-field>
+                        <v-text-field v-model="form.address" label="Address" :rules="addressRule"></v-text-field>
+                        <v-text-field v-model="form.contact" label="Contact" :rules="contactRule" required></v-text-field>
+                    </v-form>
+                </v-card-text>
+                
+                <v-card-actions>
+                    <v-btn @click="closeDialog">Close</v-btn>
+                    <v-btn color="primary" @click="submitForm" :disabled="(form.address.length < 3 || form.contact.length !== 10)">Submit</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </div>
 </template>
 
@@ -35,8 +32,11 @@ import 'vue3-toastify/dist/index.css';
 export default {
     data() {
         return {
-            form: {}
-        }
+            dialog: true,
+            form:{},
+            contactRule: [(v) => !!v || 'Contact is required', (v) => /^[0-9]{10}$/.test(v) || 'Invalid contact number'],
+            addressRule: [(v) => !!v || 'Address is required', (v) => (v && v.length >= 3) || 'Address must be at least 3 characters'],
+        };
     },
 
     setup() {
@@ -48,103 +48,46 @@ export default {
         return { notify };
     },
     computed: {
-        ...mapGetters(['getStudentToBeUpdated'])
+        ...mapGetters(['getStudentToBeUpdated']),
+        isFormValid() {
+            return this.$refs.form;
+        },
     },
     methods: {
         ...mapActions(['disableEdit']),
         ...mapActions('student', ['updateStudent']),
-
-        async editStudent(data) {
+        
+        async editStudent() {
             try{
-                const response = await this.updateStudent(data)
+                const response = await this.updateStudent(this.form)
                 this.notify(response.data);
             }
             catch(error){
                 console.error(error)
             }
-        }
+        },
+
+        closeDialog() {
+            this.disableEdit()
+            this.dialog = false;
+            this.resetForm();
+        },
+        async isFormStatusValid(){
+            const isValid = await this.$refs.form.validate()
+            return isValid.valid
+        },
+        async submitForm(){
+            if (this.isFormStatusValid) {
+                this.editStudent()
+                this.closeDialog()
+            }
+        },
+        resetForm() {
+            this.$refs.form.resetValidation(); // Reset form validation
+        },
     },
     created() {
         this.form = this.getStudentToBeUpdated;
     }
 }
 </script>
-
-<style scoped>
-body,
-form {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-}
-
-/* Style the form container */
-.form-container {
-    position: absolute;
-    top: 13%;
-    left: 50%;
-    transform: translate(-50%);
-    width: 400px;
-    margin: 20px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: pink;
-    z-index: 99;
-}
-
-/* Style form labels */
-label {
-    font-weight: bold;
-}
-
-/* Style form input fields */
-input[type="text"],
-input[type="tel"],
-select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-/* Style the submit button */
-input[type="submit"] {
-    background-color: #333;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-/* Style the submit button on hover */
-input[type="submit"]:hover {
-    background-color: #555;
-}
-
-h2 {
-    color: red;
-    font-weight: bolder;
-}
-
-#overlay {
-    position: fixed;
-    top: 0;
-    right: 0;
-    padding: 15px 20px;
-    color: white;
-    font-weight: bolder;
-    background-color: red;
-}
-
-#backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-}
-</style>

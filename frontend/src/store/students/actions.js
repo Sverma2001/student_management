@@ -3,12 +3,11 @@ import instance from '../../services/axiosService';
 
 //setting student to the student array
 export default {
-    async setStudents(context, page) {
+    async setStudents(context, payload) { 
         try {
-            const response = await instance.get(`http://localhost:3000/getStudents?page=${page}&limit=${context.state.limit}&searchTerm=${context.state.searchTerm}`);
-            console.log(response.data.students)
-            console.log(response.data.totalStudents);
+            const response = await instance.get(`http://localhost:3000/getStudents?page=${payload.page}&limit=${payload.studentsPerPage}&searchTerm=${payload.searchTerm}`);
             context.commit('setStudents', response.data);
+            return response
         } catch (error) {
             console.error(error);
         }
@@ -54,14 +53,5 @@ export default {
         catch (error) {
             console.error(error);
         }
-    },
-
-    //listening to search term and then calling the searchTerm mutation to update it in store
-    setSearchTerm(context, payload) {
-        context.commit('setSearchTerm', payload);
-    },
-
-    setStudentsPerPage(context, payload) {
-        context.commit('setStudentsPerPage', payload);
     }
 }

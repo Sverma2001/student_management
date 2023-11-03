@@ -19,11 +19,6 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 export default {
-    // data(){
-    //     return{
-    //         showNav:false
-    //     }
-    // },
     computed: {
         ...mapGetters('user', ['getLoggedInStatus'])
     },

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="footer">
   <div class="bg-teal d-flex w-100 align-center px-4">
     <strong>Get connected with us on social networks!</strong>
     <v-spacer></v-spacer>
@@ -27,3 +27,9 @@ export default {
   }),
 };
 </script>
+
+<style scoped>
+.footer{
+  margin-top:40vh;
+}
+</style>

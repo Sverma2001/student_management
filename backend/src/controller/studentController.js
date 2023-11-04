@@ -43,7 +43,6 @@ async function updateStudent(req, res) {
     const { address, contact } = { ...req.body };  
     try {
         const updatedStudent = await studentService.updateStudent(uuid, address, contact);
-        console.log(updatedStudent)
         res.status(201).send(updatedStudent);
     }
     catch (error) {

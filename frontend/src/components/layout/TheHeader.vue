@@ -1,6 +1,6 @@
 <template>
   <v-app class="my-app-margin">
-    <v-app-bar app color="purple">
+    <v-app-bar app color="purple" right>
       <div v-if="getLoggedInStatus">
         <v-btn @click="changeFormStatus" color="white"> {{$t("Add Student")}} </v-btn>
       </div>

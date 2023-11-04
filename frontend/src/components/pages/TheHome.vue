@@ -1,13 +1,13 @@
 <template>
   <v-container>
-    <h1>{{ $t("Student Data") }}</h1>
-
+    <h1>{{$t("Student Data")}}</h1>
+    <v-container>
     <v-text-field
       v-model="searchTerm"
       label="Search"
       class="float-right"
-      style="width: 300px"
-      @input="loadStudents('1', studentsPerPage, '')"
+      style="width: 400px"
+      @input="loadStudents(1)"
     />
     <v-data-table-server
       v-model:items-per-page="studentsPerPage"
@@ -15,9 +15,8 @@
       :items-length="getTotalStudents"
       :items="getStudents"
       :loading="loading"
-      :search="searchTerm"
       item-value="name"
-      class="elevation-2"
+      class="elevation-1"
       @update:options="loadStudents"
     >
       <template v-slot:item.actions="{ item }">
@@ -27,11 +26,11 @@
         </td>
       </template>
     </v-data-table-server>
+    <sidebar v-if="getLoggedInStatus"></sidebar>
   </v-container>
-
+  </v-container>
   <add-student v-if="getFormStatus"></add-student>
   <edit-student v-if="getEditStatus"></edit-student>
-  <sidebar v-if="getLoggedInStatus"></sidebar>
 </template>
 
 <script>
@@ -90,6 +89,7 @@ export default {
     ...mapActions("user", ["LoggedIn", "disableLogin"]),
 
     async handleDelete(uuid) {
+      console.log(uuid);
       try {
         const response = await this.deleteStudent(uuid);
         this.notify(response.data);
@@ -98,7 +98,7 @@ export default {
       }
     },
 
-    async loadStudents({ page }) {
+    async loadStudents(page) {
       this.currentPage = page;
       this.loading = true;
       const response = await this.setStudents({
@@ -131,11 +131,6 @@ export default {
   background-color: aliceblue;
   text-align: center;
   color: black;
-  width: 80vw;
-  padding: 20px;
-}
-
-h1{
-  font-weight: bold;
+  width: 90vw;
 }
 </style>

@@ -1,4 +1,31 @@
 <template>
+  <v-container class="v-container">
+    <v-row justify="center">
+      <v-col cols="12" sm="8" md="5">
+        <v-card elevation="4">
+          <v-card-title class="headline text-center">{{
+            $t("Register")
+          }}</v-card-title>
+          <v-card-text>
+            <v-form >
+              <v-text-field label="Name" v-model="form.name" :rules="nameRules" required></v-text-field>
+              <v-text-field label="Username" v-model="form.username" :rules="usernameRules" required></v-text-field>
+              <v-text-field label="Password" v-model="form.password" :rules="passwordRules" required></v-text-field>
+
+              <v-card-text style="color: red" v-if="errMessage === '' ? false : true">{{ errMessage }}</v-card-text>
+              <v-text>{{ $t("Already have an account?") }}
+                <router-link to="/login">{{ $t("Login") }}</router-link></v-text>
+              <v-btn class="ma-2 float-right" color="primary" type="submit" @click="submitForm" :disabled="isFormValid">{{ $t("Sign up")
+              }}</v-btn>
+            </v-form>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
+</template>
+
+<!-- <template>
   <div class="signup-container">
     <div class="signup-box">
       <h1>{{$t("Register")}}</h1>
@@ -21,42 +48,77 @@
       </form>
     </div>
   </div>
-</template> 
+</template>  -->
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
       form: {
-        name: '',
-        username: '',
-        password: ''
+        name: "",
+        username: "",
+        password: "",
       },
+      errMessage: "",
+      nameRules: [(v) => !!v || "Password is required"],
+      usernameRules: [
+        (v) => !!v || "Username is required",
+        (v) =>
+          /^[a-zA-Z0-9]+$/.test(v) ||
+          "Invalid username format",
+      ],
+      passwordRules: [
+        (v) => !!v || "Password is required",
+        (v) => (v && v.length >= 6) || "Password must be at least 6 characters",
+      ],
+    };
+  },
+  validations() {
+    return {
+      name: { required },
+      username: { required },
+      password: { required },
     };
   },
 
   computed: {
-    ...mapGetters('user', ['getSignupErrorMessage'])
+    ...mapGetters("user", ["getSignupErrorMessage"]),
+    isFormValid() {
+      return this.$refs.form;
+    },
   },
   methods: {
-    ...mapActions('user', ['addUser','clearSignupError']),
+    ...mapActions("user", ["addUser", "clearSignupError"]),
+
+    async submitForm(){
+      const isValid = await this.$refs.form.validate();
+      if(isValid.valid){
+        this.signup()
+        this.clearForm();
+      }
+    },
 
     async signup() {
-      try {
-        const response = await this.addUser(this.form)
-        if (response.status !== 409 && response.status !== 422) {
-          this.$router.push('/login');
-          this.clearSignupError();
+        try {
+          const response = await this.addUser(this.form);
+          console.log(response);
+          if (response.status !== 409 && response.status !== 422) {
+            this.$router.push("/login");
+            this.clearSignupError();
+          }
+        } catch (error) {
+          console.error(error);
         }
       }
-      catch (error) { 
-        console.error(error)
-      }
-    }
-  }
-}
-
+    },
+    clearForm() {
+      this.user.name = "";
+      this.user.email = "";
+      this.user.password = "";
+      this.$refs.form.resetValidation();
+    },
+};
 </script>
 
 <style scoped>
@@ -116,7 +178,7 @@ input[type="password"] {
 }
 
 .signup-button {
-  background-color: #007BFF;
+  background-color: #007bff;
   color: #fff;
   margin-top: 20px;
   padding: 12px 24px;
@@ -135,4 +197,4 @@ input[type="password"] {
   font-weight: bold;
   margin-top: 10px;
 }
-</style> 
+</style>

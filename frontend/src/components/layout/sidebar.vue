@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-content>
     <v-navigation-drawer expand-on-hover rail location="right">
       <v-list>
         <v-list-item
@@ -7,11 +7,7 @@
           title="Sachin Kumar Verma"
           subtitle="sverma@argusoft.com"
         ></v-list-item>
-      </v-list>
-
-      <v-divider></v-divider>
-
-      <v-list density="compact" nav>
+        <v-divider></v-divider>
         <v-list-item
           prepend-icon="mdi-logout"
           title="Logout"
@@ -20,7 +16,7 @@
         ></v-list-item>
       </v-list>
     </v-navigation-drawer>
-  </v-app>
+  </v-content>
 </template>
 
 <script>

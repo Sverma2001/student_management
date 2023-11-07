@@ -7,15 +7,17 @@
             $t("Register")
           }}</v-card-title>
           <v-card-text>
-            <v-form >
+            <v-form ref="form" @submit.prevent="submitForm()">
               <v-text-field label="Name" v-model="form.name" :rules="nameRules" required></v-text-field>
               <v-text-field label="Username" v-model="form.username" :rules="usernameRules" required></v-text-field>
               <v-text-field label="Password" v-model="form.password" :rules="passwordRules" required></v-text-field>
-
-              <v-card-text style="color: red" v-if="errMessage === '' ? false : true">{{ errMessage }}</v-card-text>
-              <v-text>{{ $t("Already have an account?") }}
-                <router-link to="/login">{{ $t("Login") }}</router-link></v-text>
-              <v-btn class="ma-2 float-right" color="primary" type="submit" @click="submitForm" :disabled="isFormValid">{{ $t("Sign up")
+              <v-card-text class="error">{{
+                getSignupErrorMessage
+              }}</v-card-text>
+              <v-text>{{ $t("Already have an account?") }}</v-text>
+              <router-link to="/login">{{ $t("Login") }}</router-link>
+              <v-btn class="ma-2 float-right" color="primary" type="submit">{{
+                $t("Sign up")
               }}</v-btn>
             </v-form>
           </v-card-text>
@@ -52,6 +54,7 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import { required } from "@vuelidate/validators";
 export default {
   data() {
     return {
@@ -61,12 +64,13 @@ export default {
         password: "",
       },
       errMessage: "",
-      nameRules: [(v) => !!v || "Password is required"],
+      nameRules: [
+        (v) => !!v || "Name is required",
+        (v) => /^[a-zA-Z0-9]+$/.test(v) || "Invalid name format",
+      ],
       usernameRules: [
         (v) => !!v || "Username is required",
-        (v) =>
-          /^[a-zA-Z0-9]+$/.test(v) ||
-          "Invalid username format",
+        (v) => /^[a-zA-Z0-9]+$/.test(v) || "Invalid username format",
       ],
       passwordRules: [
         (v) => !!v || "Password is required",
@@ -85,39 +89,36 @@ export default {
   computed: {
     ...mapGetters("user", ["getSignupErrorMessage"]),
     isFormValid() {
-      return this.$refs.form;
+      return this.$refs.form.validate();
     },
   },
   methods: {
     ...mapActions("user", ["addUser", "clearSignupError"]),
 
-    async submitForm(){
-      const isValid = await this.$refs.form.validate();
-      if(isValid.valid){
-        this.signup()
-        this.clearForm();
+    async submitForm() {
+      const isValid = await this.isFormValid;
+      console.log("isvalid", isValid);
+      if (isValid.valid) {
+        this.signup();
       }
     },
-
+    
     async signup() {
-        try {
-          const response = await this.addUser(this.form);
-          console.log(response);
-          if (response.status !== 409 && response.status !== 422) {
-            this.$router.push("/login");
-            this.clearSignupError();
-          }
-        } catch (error) {
-          console.error(error);
+      console.log("abc");
+      console.log(this.form);
+      try {
+        console.log("def");
+        const response = await this.addUser(this.form);
+        console.log(response);
+        if (response.status !== 409 && response.status !== 422) {
+          this.$router.push("/login");
+          this.clearSignupError();
         }
+      } catch (error) {
+        console.error(error);
       }
     },
-    clearForm() {
-      this.user.name = "";
-      this.user.email = "";
-      this.user.password = "";
-      this.$refs.form.resetValidation();
-    },
+  },
 };
 </script>
 

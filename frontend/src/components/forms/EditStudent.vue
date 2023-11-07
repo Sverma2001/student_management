@@ -60,7 +60,7 @@ export default {
         async editStudent() {
             try{
                 const response = await this.updateStudent(this.form)
-                this.notify(response.data);
+                this.notify(`${response.data.name}'s data updated successfully`);
             }
             catch(error){
                 console.error(error)

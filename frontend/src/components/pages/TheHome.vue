@@ -98,7 +98,7 @@ export default {
       }
     },
 
-    async loadStudents(page) {
+    async loadStudents({page}) {
       this.currentPage = page;
       this.loading = true;
       const response = await this.setStudents({

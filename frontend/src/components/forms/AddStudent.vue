@@ -85,7 +85,6 @@ export default {
             try {
                 //calling addStudent action to add student data received from the form
                 const response = await this.addStudent({ ...this.form });
-                console.log(response.data);
                 this.notify(`${response.data.name} added successfully` );
             } catch (error) {
                 console.error(error);
